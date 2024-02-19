@@ -1,17 +1,11 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { getStorage, provideStorage } from '@angular/fire/storage';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
 
 //PrimeNg
+import { SidebarModule } from 'primeng/sidebar';
 import { DockModule } from 'primeng/dock';
 import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -33,34 +27,31 @@ import { CookieService } from 'ngx-cookie-service';
 import { TimelineModule } from 'primeng/timeline';
 import { StyleClassModule } from 'primeng/styleclass';
 import { MessageService } from 'primeng/api';
+import { CarouselModule } from 'primeng/carousel';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ImageModule } from 'primeng/image';
 import { FileUploadModule } from 'primeng/fileupload';
 
 
 //Pages
-import { HomeComponent } from './modules/home/home.component';
-import { NavbarComponent } from './modules/navbar/navbar.component';
-import { LoginComponent } from './modules/login/login.component';
-import { RegisterComponent } from './modules/register/register.component';
+import { DashboardHomeComponent } from './page/dashboard-home/dashboard-home.component';
+import { TolbarNavigationComponent } from './page/tolbar-navigation/tolbar-navigation.component';
+import { DASHBOARD_ROUTES } from './dashboard.routing';
+import { AddProductsComponent } from './page/add-products/add-products.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    NavbarComponent,
-    LoginComponent,
-    RegisterComponent,
+    DashboardHomeComponent,
+    TolbarNavigationComponent,
+    AddProductsComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
+    CommonModule,
     FormsModule,
+    ReactiveFormsModule,
 
-    //PrimeNg
+    SidebarModule,
     InputGroupModule,
     InputGroupAddonModule,
     ButtonModule,
@@ -80,19 +71,15 @@ import { RegisterComponent } from './modules/register/register.component';
     MessagesModule,
     TimelineModule,
     StyleClassModule,
+    CarouselModule,
+    InputNumberModule,
+    ImageModule,
     FileUploadModule,
-
-    //FireBase
-    provideFirebaseApp(() => initializeApp({ "projectId": "vendasprodutos-d11a3", "appId": "1:154639426841:web:1bc526e2e5241fd4bb5188", "storageBucket": "vendasprodutos-d11a3.appspot.com", "apiKey": "AIzaSyANrlSJNMXeoVGCbNH8NzAvDC98DsNTpD4", "authDomain": "vendasprodutos-d11a3.firebaseapp.com", "messagingSenderId": "154639426841", "measurementId": "G-WGZST8M26H" })),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
+    RouterModule.forChild(DASHBOARD_ROUTES)
   ],
   providers: [
-    provideClientHydration(),
     MessageService,
-    CookieService
+    CookieService,
   ],
-  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class DashboardModule { }

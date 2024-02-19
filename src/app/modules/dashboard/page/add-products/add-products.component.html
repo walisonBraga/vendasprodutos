@@ -1,0 +1,66 @@
+<app-tolbar-navigation></app-tolbar-navigation>
+<form [formGroup]="addProductsForm" (ngSubmit)="addProductsSubmit()">
+  <p-card
+    class="flex center justify-content-center align-content-center text-align-center"
+    header="Cadastro de Produtos"
+    [style]="{ width: '390px' }"
+  >
+    <div class="p-grid p-justify-center">
+      <div class="p-col-12 mt-2">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Img </label>
+          <input
+            class="form-control"
+            type="file"
+            id="formFile"
+            formControlName="imgProducts"
+            (change)="uploadImage($event)"
+          />
+          <div class="image-task">
+            <img [src]="addProductsForm.controls['imgProducts'].value" alt />
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="text"
+            size="30"
+            pInputText
+            formControlName="nome"
+          />
+          <label for="float-input">Nome do Produto</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-2">
+        <label class="block font-bold mb-2" for="currency-BRL"
+          >Valor da unidade</label
+        >
+        <span class="p-float-label">
+          <p-inputNumber
+            inputId="currency-BRL"
+            mode="currency"
+            currency="BRL"
+            locale="pt-BR"
+            formControlName="price"
+            [(ngModel)]="addProductsForm.value.price"
+            [step]="0.1"
+          >
+          </p-inputNumber>
+        </span>
+      </div>
+    </div>
+
+    <p-button
+      class="btn btn-primary w-full mt-4 flex center justify-content-center"
+      label="confirmar"
+      type="submit"
+    ></p-button>
+  </p-card>
+</form>
+
+<div *ngFor="let product of products">
+  <h3>{{ product.nome }}</h3>
+  <p>{{ product.price }}</p>
+</div>

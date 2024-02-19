@@ -1,0 +1,69 @@
+<app-navbar></app-navbar>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <p-card
+    class="flex center justify-content-center align-content-center text-align-center top-100"
+    header="login"
+    subheader="Produtos"
+    [style]="{ width: '390px' }"
+  >
+    <div class="p-grid p-justify-center">
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="text"
+            size="30"
+            pInputText
+            formControlName="email"
+          />
+          <label for="float-input">Email</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-5">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="password"
+            size="30"
+            pInputText
+            formControlName="password"
+          />
+          <label for="float-input">password</label>
+        </span>
+      </div>
+    </div>
+
+    <p-toast position="bottom-center" key="confirm" [baseZIndex]="5000">
+      <ng-template let-message pTemplate="message">
+        <div class="flex flex-column align-items-start" style="flex: 1">
+          <div class="flex align-items-center gap-2">
+            <p-avatar
+              image="https://primefaces.org/cdn/primeng/images/avatar/amyelsner.png"
+              shape="circle"
+            />
+            <span class="font-bold text-900">Amy Elsner</span>
+          </div>
+          <div class="font-medium text-lg my-3 text-900">
+            {{ user?.nome }}
+          </div>
+        </div>
+      </ng-template>
+    </p-toast>
+    <button
+      class="btn btn-primary w-full mt-4 flex center justify-content-center"
+      type="button"
+      pButton
+      pRipple
+      label="Confirma"
+      type="submit"
+    ></button>
+
+    <!-- <p-button
+      class="btn btn-primary w-full mt-4 flex center justify-content-center"
+      label="Login"
+      type="submit"
+      [disabled]="loginForm.invalid"
+    ></p-button> -->
+  </p-card>
+</form>

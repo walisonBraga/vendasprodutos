@@ -1,0 +1,92 @@
+<app-navbar></app-navbar>
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <p-card
+    class="flex center justify-content-center align-content-center text-align-center"
+    header="login"
+    subheader="Card Subheader"
+    [style]="{ width: '390px' }"
+  >
+    <div class="p-grid p-justify-center">
+      <div class="p-col-12 mt-2">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Img </label>
+          <input
+            class="form-control"
+            type="file"
+            id="formFile"
+            formControlName="imgUrl"
+            (change)="uploadImage($event)"
+          />
+          <div class="image-task">
+            <img [src]="registerForm.controls['imgUrl'].value" alt />
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="text"
+            size="30"
+            pInputText
+            formControlName="nome"
+          />
+          <label for="float-input">Nome</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="text"
+            size="30"
+            pInputText
+            formControlName="sobrenome"
+          />
+          <label for="float-input">SobreNome</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="text"
+            size="30"
+            pInputText
+            formControlName="email"
+          />
+          <label for="float-input">Email</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-3">
+        <span class="p-float-label">
+          <label for="float-input">password</label>
+          <p-password
+            id="float-input"
+            [(ngModel)]="value"
+            [feedback]="false"
+            formControlName="password"
+          ></p-password>
+        </span>
+      </div>
+      <!-- <div class="p-col-12 mt-3">
+        <span class="p-float-label">
+          <label for="float-input">Confirmar Password</label>
+          <p-password
+          id="float-input"
+            [(ngModel)]="value"
+            [feedback]="false"
+            formControlName="confirmPassword"
+          ></p-password>
+        </span>
+      </div> -->
+    </div>
+
+    <p-button
+      class="btn btn-primary w-full mt-4 flex center justify-content-center"
+      label="Login"
+      type="submit"
+    ></p-button>
+  </p-card>
+</form>

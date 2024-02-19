@@ -1,0 +1,43 @@
+<app-tolbar-navigation></app-tolbar-navigation>
+
+<p-carousel
+  [value]="displayProducts"
+  [numVisible]="3"
+  [numScroll]="3"
+  [circular]="false"
+  [responsiveOptions]="responsiveOptions"
+  [autoplayInterval]="3000"
+>
+  <ng-template let-displayProducts pTemplate="item">
+    <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+      <div class="mb-3">
+        <p-image
+          src="{{ displayProducts.imgProducts }}"
+          alt="Image"
+          width="250"
+          [preview]="true"
+          [alt]="displayProducts.name"
+          class="w-6 shadow-2"
+        ></p-image>
+      </div>
+      <div>
+        <h4 class="mb-1">{{ displayProducts.nome }}</h4>
+        <h6 class="mt-0 mb-3">
+          {{ displayProducts.price | currency : " symbol" : "R$" }}
+        </h6>
+        <!-- <p-tag
+          [value]="displayProducts.inventoryStatus"
+          [severity]="getSeverity(displayProducts.inventoryStatus)"
+        ></p-tag> -->
+        <div class="mt-5 flex align-items-center justify-content-center gap-2">
+          <p-button icon="pi pi-cart-plus" [rounded]="true" />
+          <p-button
+            icon="pi pi-star-fill"
+            [rounded]="true"
+            severity="secondary"
+          />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

@@ -1,0 +1,20 @@
+form {
+  background-image: url("../../../assets/img_login/20221012-Idea-00.jpg") !important;
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+@media screen and (min-width: 1400px) {
+  form {
+    background-position: top;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  form {
+    height: 100vmax;
+  }
+}
