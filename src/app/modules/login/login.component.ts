@@ -33,25 +33,6 @@ export class LoginComponent {
     });
   }
 
-  // checkEmail(control: any): { invalidEmail?: boolean } | null {
-  //   const isValid = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(control.value);
-  //   return !isValid ? { invalidEmail: true } : null;
-  // }
-
-  // constructor(private fb: FormBuilder, private router: Router) {
-  //   this.loginForm = this.fb.group({
-  //     email: this.fb.group({
-  //       value: '',
-  //       disabled: false
-  //     },
-  //       { validators: [this.checkEmail] }),
-  //     password: '' + this.fb.group({
-  //       value: '',
-  //       disabled: true
-  //     })
-  //   });
-  // }
-
   checkEmail(control: any): { invalidEmail?: boolean } | null {
     const isValid = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(control.value);
     return !isValid ? { invalidEmail: true } : null;
@@ -77,7 +58,7 @@ export class LoginComponent {
           ${this.user?.nome}
           ${this.user?.sobrenome}!`,
           showConfirmButton: false,
-          timer: 4000
+          timer: 3000
         });
 
       }, error => {

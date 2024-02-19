@@ -37,19 +37,4 @@ export class DashboardHomeComponent {
       this.displayProducts = addProducts;
     });
   }
-
-
-
-
-
-  // async ListProducts() {
-  //   const resRef = await this.addProductsService.getAddProducts(this.user._id);
-  //   console.log("list products", this.ListAddProducts)
-  //   return resRef;
-  // }
-
-  // ngOnInit() {
-  //   this.addProductsService.getProductsSmall().then((products) => {
-  //       this.products = products;
-  //   });
 }
