@@ -41,6 +41,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { NavbarComponent } from './modules/navbar/navbar.component';
 import { LoginComponent } from './modules/login/login.component';
 import { RegisterComponent } from './modules/register/register.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { RegisterComponent } from './modules/register/register.component';
   providers: [
     provideClientHydration(),
     MessageService,
-    CookieService
+    CookieService,
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

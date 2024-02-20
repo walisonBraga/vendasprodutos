@@ -1,20 +1,30 @@
 import { Component } from '@angular/core';
 import { AddProductsService } from '../../../../service/dashboard/add-products.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddProducts } from '../../../interface/dashboard/addProducts.interface';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-add-products',
   templateUrl: './add-products.component.html',
-  styleUrl: './add-products.component.scss'
+  styleUrl: './add-products.component.scss',
+  providers: [MessageService, ConfirmationService,MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+
 })
 export class AddProductsComponent {
   addProductsForm!: FormGroup;
   products: AddProducts[] = [];
-
-
+  value!: true;
+  statuses!: any[];
+  description!: false;
+  inventoryStatus!: false;
+  category!: false;
 
   constructor(
     private addProductsService: AddProductsService,
@@ -22,18 +32,25 @@ export class AddProductsComponent {
     private storage: Storage
   ) {
     this.addProductsForm = this.fb.group({
-      nome: ['', Validators.required],
-      price: ['', Validators.required],
       imgProducts: ['', Validators.required],
+      nome: ['', Validators.required],
+      description: ['', Validators.required],
+      inventoryStatus: ['', Validators.required],
+      category: ['', Validators.required],
+      price: ['', Validators.required],
       quantity: ['', Validators.required],
     });
+
   }
 
   async addProductsSubmit() {
     const addProducts: AddProducts = {
-      nome: this.addProductsForm.value.nome,
-      price: this.addProductsForm.value.price,
       imgProducts: this.addProductsForm.value.imgProducts,
+      nome: this.addProductsForm.value.nome,
+      description: this.addProductsForm.value.description,
+      inventoryStatus: this.addProductsForm.value.inventoryStatus,
+      category: this.addProductsForm.value.category,
+      price: this.addProductsForm.value.price,
       quantity: this.addProductsForm.value.quantity,
     };
     this.addProductsService.addProducts(addProducts)
@@ -59,12 +76,30 @@ export class AddProductsComponent {
       console.log('Arquivo disponível em', downloadURL);
       this.addProductsForm.get('imgProducts')?.setValue(downloadURL)
     });
-
     console.log(imgRef.storage);
-
     uploadBytes(imgRef, file)
       .then(response => console.log(response))
       .catch(error => console.log(error));
+  }
 
+  stt() {
+    this.statuses = [
+      { label: 'INSTOCK', value: 'instock' },
+      { label: 'LOWSTOCK', value: 'lowstock' },
+      { label: 'OUTOFSTOCK', value: 'outofstock' }
+    ];
+  }
+
+  getSeverity(status: string) {
+    switch (status) {
+      case 'INSTOCK':
+        return 'success';
+      case 'LOWSTOCK':
+        return 'warning';
+      case 'OUTOFSTOCK':
+        return 'danger';
+      default:
+        throw new Error('Invalid status');
+    }
   }
 }

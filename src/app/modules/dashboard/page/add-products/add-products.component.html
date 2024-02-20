@@ -3,7 +3,7 @@
   <p-card
     class="flex center justify-content-center align-content-center text-align-center"
     header="Cadastro de Produtos"
-    [style]="{ width: '390px' }"
+    [style]="{ width: '600px' }"
   >
     <div class="p-grid p-justify-center">
       <div class="p-col-12 mt-2">
@@ -33,12 +33,154 @@
           <label for="float-input">Nome do Produto</label>
         </span>
       </div>
-      <div class="p-col-12 mt-2">
-        <label class="block font-bold mb-2" for="currency-BRL"
-          >Valor da unidade</label
+      <div class="p-col-12 m-4">
+        <label class="flex justify-content-center" for="Description"
+          >Descrição do Produto</label
         >
+        <div class="flex mt-2 m-3 justify-content-center">
+          <textarea
+            pTooltip="Descrição"
+            id="float-input"
+            rows="5"
+            cols="30"
+            pInputTextarea
+            [(ngModel)]="value"
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- <div class="field">
+        <label for="inventoryStatus">Inventory Status</label>
+        <p-dropdown [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses">
+            <ng-template pTemplate="selectedItem">
+                <p-tag [value]="product.inventoryStatus.toUpperCase()" [severity]="getSeverity(product.inventoryStatus.toUpperCase())"></p-tag>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+                <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
+            </ng-template>
+        </p-dropdown>
+    </div> -->
+
+      <div class="col-12">
+        <label class="flex justify-content-center" for="price">Estoque</label>
+        <div class="flex justify-content-center m-2 g-2">
+          <mat-radio-group
+            [(ngModel)]="inventoryStatus"
+            formControlName="inventoryStatus"
+            aria-label="Select an option"
+          >
+            <mat-radio-button
+              formControlName="inventoryStatus"
+              class="m-2"
+              value="EM ESTOQUE"
+              >EM ESTOQUE</mat-radio-button
+            >
+            <mat-radio-button
+              formControlName="inventoryStatus"
+              class="m-2"
+              value="BAIXO ESTOQUE"
+              >BAIXO ESTOQUE</mat-radio-button
+            >
+            <mat-radio-button
+              formControlName="inventoryStatus"
+              class="m-2"
+              value="FORA DE ESTOQUE"
+              >FORA DE ESTOQUE</mat-radio-button
+            >
+            <!-- <mat-radio-button value="2">Option 2</mat-radio-button> -->
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label class="flex justify-content-center" for="price">Descrição do Produto</label>
+        <div class="flex justify-content-center m-2 g-2">
+          <mat-radio-group
+            [(ngModel)]="category"
+            formControlName="category"
+            aria-label="Select an option"
+          >
+            <mat-radio-button
+              formControlName="category"
+              class="m-2"
+              value="eletronicos"
+              >Eletronicos</mat-radio-button
+            >
+            <mat-radio-button
+              formControlName="category"
+              class="m-2"
+              value="acessórios"
+              >Acessórios</mat-radio-button
+            >
+            <mat-radio-button
+              formControlName="category"
+              class="m-2"
+              value="gamer"
+              >Gamer</mat-radio-button
+            >
+            <!-- <mat-radio-button value="2">Option 2</mat-radio-button> -->
+          </mat-radio-group>
+        </div>
+      </div>
+      <!-- <div class="field m-3">
+        <label class="flex text-center justify-content-center mb-3"
+          >Categoria</label
+        >
+        <div class="formgrid grid">
+          <div class="col-6">
+            <p-radioButton
+              id="accessories"
+              name="accessories"
+              value="accessories"
+              formControlName="accessories"
+              value="textarea"
+            ></p-radioButton>
+            <label for="category1">Acessórios</label>
+          </div>
+          <div class="field-checkbox col-6">
+            <p-radioButton
+              value="Cheese"
+              id="category2"
+              name="category2"
+              value="Clothing"
+              formControlName="category2"
+            ></p-radioButton>
+            <label for="category2">Eletrônicos</label>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="price">Valor da unidade</label>
+          <p-inputNumber
+            pTooltip="Valor da unidade"
+            inputId="currency-BRL"
+            mode="currency"
+            currency="BRL"
+            locale="pt-BR"
+            formControlName="price"
+            [(ngModel)]="addProductsForm.value.price"
+            [step]="0.1"
+          >
+          </p-inputNumber>
+        </div>
+        <div class="field col">
+          <label for="quantity">Quantidade itens</label>
+          <p-inputNumber
+            inputId="integeronly"
+            formControlName="quantity"
+            pTooltip="Quantidade itens"
+          >
+          </p-inputNumber>
+        </div>
+      </div>
+
+      <!-- <div class="p-col-12 mt-2">
         <span class="p-float-label">
           <p-inputNumber
+            pTooltip="Valor da unidade"
             inputId="currency-BRL"
             mode="currency"
             currency="BRL"
@@ -51,13 +193,15 @@
         </span>
       </div>
       <div class="p-col-12 mt-2">
-        <!-- <label class="block font-bold mb-2" for="currency-BRL">quantity</label> -->
         <span class="p-float-label">
-          <p-inputNumber inputId="integeronly" formControlName="quantity">
+          <p-inputNumber
+            inputId="integeronly"
+            formControlName="quantity"
+            pTooltip="Quantidade itens"
+          >
           </p-inputNumber>
-          <label for="number-input">Quantity</label>
         </span>
-      </div>
+      </div> -->
     </div>
 
     <p-button

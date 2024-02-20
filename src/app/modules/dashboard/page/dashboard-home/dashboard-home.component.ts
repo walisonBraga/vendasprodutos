@@ -19,6 +19,7 @@ export class DashboardHomeComponent {
   responsiveOptions: any[] | undefined;
   chartOptions: any;
 
+
   constructor(
     private auth: AuthService,
     private cookie: CookieService,
@@ -59,6 +60,18 @@ export class DashboardHomeComponent {
     return totalSales;
   }
 
-  
+
+  getSeverity(inventoryStatus: string) {
+    switch (inventoryStatus) {
+      case 'EM ESTOQUE':
+        return 'success';
+      case 'BAIXO ESTOQUE':
+        return 'warning';
+      case 'FORA DE ESTOQUE':
+        return 'danger';
+      default:
+        throw new Error(`Invalid status: ${inventoryStatus}`);
+    }
+  }
 
 }

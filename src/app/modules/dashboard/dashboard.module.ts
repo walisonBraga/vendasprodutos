@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatChipsModule } from '@angular/material/chips';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 //PrimeNg
@@ -31,6 +34,12 @@ import { CarouselModule } from 'primeng/carousel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ImageModule } from 'primeng/image';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { TagModule } from 'primeng/tag';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+import {MatSelectModule} from '@angular/material/select';
 
 
 //Pages
@@ -50,6 +59,12 @@ import { AddProductsComponent } from './page/add-products/add-products.component
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
+    //Angular
+    MatRadioModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatSelectModule,
 
     SidebarModule,
     InputGroupModule,
@@ -75,6 +90,11 @@ import { AddProductsComponent } from './page/add-products/add-products.component
     InputNumberModule,
     ImageModule,
     FileUploadModule,
+    TableModule,
+    DialogModule,
+    TagModule,
+    RadioButtonModule,
+    DropdownModule,
     RouterModule.forChild(DASHBOARD_ROUTES)
   ],
   providers: [
