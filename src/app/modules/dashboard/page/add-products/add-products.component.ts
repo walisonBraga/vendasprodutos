@@ -25,6 +25,7 @@ export class AddProductsComponent {
       nome: ['', Validators.required],
       price: ['', Validators.required],
       imgProducts: ['', Validators.required],
+      quantity: ['', Validators.required],
     });
   }
 
@@ -33,6 +34,7 @@ export class AddProductsComponent {
       nome: this.addProductsForm.value.nome,
       price: this.addProductsForm.value.price,
       imgProducts: this.addProductsForm.value.imgProducts,
+      quantity: this.addProductsForm.value.quantity,
     };
     this.addProductsService.addProducts(addProducts)
       .then(response => {

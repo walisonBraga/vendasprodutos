@@ -5,13 +5,8 @@ import { TolbarNavigationComponent } from './page/tolbar-navigation/tolbar-navig
 import { AddProductsComponent } from './page/add-products/add-products.component';
 
 export const DASHBOARD_ROUTES: Routes = [
-  // {
-  //   path: '',
-  //   component: DashboardHomeComponent
-  // },
   {
     path: '',
-    pathMatch: 'full',
     component: DashboardHomeComponent
   },
   {

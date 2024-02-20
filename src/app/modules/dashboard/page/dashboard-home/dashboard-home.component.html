@@ -1,5 +1,35 @@
 <app-tolbar-navigation></app-tolbar-navigation>
 
+<div class=" flex grid justify-content-center gap-6 my-6">
+    <p-fieldset class="gap-1">
+      <ng-template pTemplate="header" >
+        <div class="flex align-items-center gap-1 px-2">
+          <a class="pi pi-box"></a>
+          <span class="font-bold">Quantidade de itens</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+        <a class="pi pi-book"></a>
+        {{ quantityOfItems() }}
+      </p>
+    </p-fieldset>
+
+    <p-fieldset class="gap-1 btn btn-primary">
+      <ng-template pTemplate="header" >
+        <div class="flex align-items-center gap-1 px-2">
+          <a class="pi pi-star"></a>
+          <span class="font-bold">faturamento da STARGAMER</span>
+        </div>
+      </ng-template>
+      <p class="m-0">
+        <a class="pi pi-calculator"></a>
+        {{ calculateTotalSales() | currency : " symbol" : "R$" }}
+      </p>
+    </p-fieldset>
+
+  </div>
+
+
 <p-carousel
   [value]="displayProducts"
   [numVisible]="3"
@@ -25,6 +55,17 @@
         <h6 class="mt-0 mb-3">
           {{ displayProducts.price | currency : " symbol" : "R$" }}
         </h6>
+        <div
+          [ngClass]="{
+            outofstock: displayProducts.quantity === 0,
+            lowstock:
+              displayProducts.quantity > 0 && displayProducts.quantity < 10,
+            instock: displayProducts.quantity > 10
+          }"
+        >
+          {{ displayProducts.quantity }}
+        </div>
+
         <!-- <p-tag
           [value]="displayProducts.inventoryStatus"
           [severity]="getSeverity(displayProducts.inventoryStatus)"
@@ -41,3 +82,11 @@
     </div>
   </ng-template>
 </p-carousel>
+
+<!-- <div *ngFor="let display of displayProducts">
+  {{ display.price * display.quantity | currency : " symbol" : "R$"}}
+</div>
+
+<p>Total Quantity: {{ quantityOfItems() }}</p>
+
+<p>Total Quantity: {{ calculateTotalSales() | currency : " symbol" : "R$" }}</p> -->
