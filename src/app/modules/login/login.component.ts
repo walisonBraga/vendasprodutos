@@ -50,24 +50,42 @@ export class LoginComponent {
         this.authService.getUserInfo(_resposta.user.uid);
         this.loginForm.reset();
         this.router.navigate(['/dashboard']);
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Seja Bem-vindo de volta`,
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Seja Bem-vindo de volta",
           text: `
           ${this.user?.nome}
           ${this.user?.sobrenome}!`,
-          showConfirmButton: false,
-          timer: 3000
         });
-
       }, error => {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: `Erro ao Logar ! Tente novamente mais tarde... `,
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
           showConfirmButton: false,
-          timer: 3000
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Erro ao Logar ! Tente novamente mais tarde...",
         });
         console.log(error);
       })

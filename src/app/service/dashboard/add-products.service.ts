@@ -1,8 +1,8 @@
 import { AddProducts } from './../../modules/interface/dashboard/addProducts.interface';
-import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData, getDocs, query, updateDoc, where } from '@angular/fire/firestore';
+import { DocumentData, DocumentReference, Firestore, addDoc, collection, collectionData, deleteDoc, deleteField, doc, docData, getDocs, query, serverTimestamp, updateDoc, where } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { User } from '@angular/fire/auth';
+import { Observable, from } from 'rxjs';
+import { Auth, User } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { User } from '@angular/fire/auth';
 export class AddProductsService {
   private user!: User;
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore, private afAuth: Auth) { }
 
   addProducts(addProducts: AddProducts, id?: string) {
     const addProductsRef = collection(this.firestore, 'addProducts');
@@ -22,24 +22,15 @@ export class AddProductsService {
     return collectionData(productsRef, { idField: 'uid' }) as Observable<AddProducts[]>;
   }
 
-  updateProduct(productId: string, addProducts: AddProducts): any {
-    const productDoc = doc(this.firestore, `addProducts/${productId}`);
-    return productDoc;
+
+  updateProduct(uid: string, newData: Partial<AddProducts>): Promise<void> {
+    const productDoc = doc(this.firestore, `addProducts/${uid}`);
+    return updateDoc(productDoc, newData);
   }
 
-  deleteProduct(productId: string) {
-    const productDoc = doc(this.firestore, `addProducts/${productId}`);
-    return deleteDoc(productDoc);
+  deleteProduct(uid: string): Promise<void> {
+    const productDelete = doc(this.firestore, 'addProducts', uid);
+    return deleteDoc(productDelete);
   }
-
-  // getProducts() {
-  //   return this.addProductsCollection.valueChanges();
-  // }
-
-
-  // getProduct(productId: string) {
-  //   const productDoc = doc(this.firestore, `addProducts/${productId}`);
-  //   return docData(productDoc);
-  // }
-
 }
+

@@ -31,13 +31,6 @@ export class TolbarNavigationComponent {
   }
 
 
-  async onSubmit() {
-    // const register: Register = {
-    //   nome: this.auth.getCurrentUser().nome,
-    //   sobrenome: this.auth.getCurrentUser().email,
-    //   email: this.auth.getCurrentUser().email,
-    //   password: this.auth.getCurrentUser().password,
-    // }
-    // return register;
-  }
+   onSubmit() {}
+
 }

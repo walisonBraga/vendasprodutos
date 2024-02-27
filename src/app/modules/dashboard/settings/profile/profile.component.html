@@ -1,0 +1,103 @@
+<app-tolbar-navigation></app-tolbar-navigation>
+
+<form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="form-horizontal">
+  <p-card
+    class="flex center justify-content-center align-content-center text-align-center"
+    header="Perfil"
+    subheader="Card Subheader"
+    [style]="{ width: '390px' }"
+  >
+    <div class="p-grid p-justify-center">
+      <div class="p-col-12 mt-2">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Img </label>
+          <input
+            class="form-control"
+            type="file"
+            id="formFile"
+            formControlName="imgUrl"
+            (change)="uploadImage($event)"
+          />
+          <div class="image-task">
+            <img
+              class="imgProfile"
+              [src]="profileForm.controls['imgUrl'].value"
+              alt
+            />
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-nome"
+            type="text"
+            size="30"
+            pInputText
+            formControlName="nome"
+
+          />
+          <label for="float-nome">Nome</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-sobrenome"
+            type="text"
+            size="30"
+            pInputText
+            formControlName="sobrenome"
+          />
+          <label for="float-sobrenome">Sobrenome</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-2">
+        <span class="p-float-label">
+          <input
+            id="float-email"
+            type="email"
+            size="30"
+            pInputText
+            formControlName="email"
+          />
+          <label for="float-email">Email</label>
+        </span>
+      </div>
+      <div class="p-col-12 mt-3">
+        <span class="p-float-label">
+          <input
+            id="float-password"
+            type="password"
+            size="30"
+            pInputText
+            formControlName="password"
+          />
+          <label for="float-password">Senha</label>
+        </span>
+      </div>
+    </div>
+
+    <p-button
+      class="btn btn-primary w-full mt-4 flex center justify-content-center"
+      label="Atualizar"
+      type="submit"
+    ></p-button>
+
+    <!-- <p-button
+      class="btn btn-primary w-full mt-4 flex center justify-content-center"
+      label="Update"
+      type="submit"
+      (click)="update(user)"
+    ></p-button> -->
+  </p-card>
+</form>
+
+<!--
+<div *ngIf="register$ | async as registers">
+  <div *ngFor="let register of registers">
+    <h2>{{ register.nome }} {{ register.sobrenome }}</h2>
+    <p>Email: {{ register.email }}</p>
+  </div>
+</div>
+-->

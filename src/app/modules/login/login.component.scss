@@ -1,20 +1,24 @@
-form {
-  background-image: url("../../../assets/img_login/20221012-Idea-00.jpg") !important;
-  
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-}
+// .kk {
+//   flex: auto;
+//   background-image: url("../../../assets/img_login/_3f3f45e7-5814-453f-a5e2-a0e5052b847b.jpg") !important;
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   height: 100vh;
+// }
 
-@media screen and (min-width: 1400px) {
-  form {
-    background-position: top;
-  }
-}
+// @media screen and (min-width: 1400px) {
+//   form {
+//     background-position: top;
+//   }
+// }
 
-@media screen and (max-width: 1000px) {
-  form {
-    height: 100vmax;
-  }
+// @media screen and (max-width: 1000px) {
+//   form {
+//     height: 100vmax;
+//   }
+// }
+
+#imgLogin{
+  display:  flex;
 }

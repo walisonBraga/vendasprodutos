@@ -7,11 +7,6 @@ import { MessageService } from 'primeng/api';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
-interface UploadEvent {
-  originalEvent: Event;
-  files: File[];
-}
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -37,6 +32,7 @@ export class RegisterComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+    
   }
 
   //   this.registerForm = fb.group({

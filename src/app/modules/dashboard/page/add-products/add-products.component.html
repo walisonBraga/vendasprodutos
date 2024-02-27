@@ -49,19 +49,6 @@
           ></textarea>
         </div>
       </div>
-
-      <!-- <div class="field">
-        <label for="inventoryStatus">Inventory Status</label>
-        <p-dropdown [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses">
-            <ng-template pTemplate="selectedItem">
-                <p-tag [value]="product.inventoryStatus.toUpperCase()" [severity]="getSeverity(product.inventoryStatus.toUpperCase())"></p-tag>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-                <p-tag [value]="option.label" [severity]="getSeverity(option.label)"></p-tag>
-            </ng-template>
-        </p-dropdown>
-    </div> -->
-
       <div class="col-12">
         <label class="flex justify-content-center" for="price">Estoque</label>
         <div class="flex justify-content-center m-2 g-2">
@@ -70,87 +57,37 @@
             formControlName="inventoryStatus"
             aria-label="Select an option"
           >
-            <mat-radio-button
-              formControlName="inventoryStatus"
-              class="m-2"
-              value="EM ESTOQUE"
+            <mat-radio-button class="m-2" value="EM ESTOQUE"
               >EM ESTOQUE</mat-radio-button
             >
-            <mat-radio-button
-              formControlName="inventoryStatus"
-              class="m-2"
-              value="BAIXO ESTOQUE"
+            <mat-radio-button class="m-2" value="BAIXO ESTOQUE"
               >BAIXO ESTOQUE</mat-radio-button
             >
-            <mat-radio-button
-              formControlName="inventoryStatus"
-              class="m-2"
-              value="FORA DE ESTOQUE"
+            <mat-radio-button class="m-2" value="FORA DE ESTOQUE"
               >FORA DE ESTOQUE</mat-radio-button
             >
-            <!-- <mat-radio-button value="2">Option 2</mat-radio-button> -->
           </mat-radio-group>
         </div>
       </div>
 
       <div class="col-12">
-        <label class="flex justify-content-center" for="price">Descrição do Produto</label>
+        <label class="flex justify-content-center" for="price">Categoria</label>
         <div class="flex justify-content-center m-2 g-2">
           <mat-radio-group
             [(ngModel)]="category"
             formControlName="category"
             aria-label="Select an option"
           >
-            <mat-radio-button
-              formControlName="category"
-              class="m-2"
-              value="eletronicos"
+            <mat-radio-button class="m-2" value="eletronicos"
               >Eletronicos</mat-radio-button
             >
-            <mat-radio-button
-              formControlName="category"
-              class="m-2"
-              value="acessórios"
+            <mat-radio-button class="m-2" value="acessórios"
               >Acessórios</mat-radio-button
             >
-            <mat-radio-button
-              formControlName="category"
-              class="m-2"
-              value="gamer"
-              >Gamer</mat-radio-button
-            >
-            <!-- <mat-radio-button value="2">Option 2</mat-radio-button> -->
+            <mat-radio-button class="m-2" value="gamer">Gamer</mat-radio-button>
           </mat-radio-group>
         </div>
       </div>
-      <!-- <div class="field m-3">
-        <label class="flex text-center justify-content-center mb-3"
-          >Categoria</label
-        >
-        <div class="formgrid grid">
-          <div class="col-6">
-            <p-radioButton
-              id="accessories"
-              name="accessories"
-              value="accessories"
-              formControlName="accessories"
-              value="textarea"
-            ></p-radioButton>
-            <label for="category1">Acessórios</label>
-          </div>
-          <div class="field-checkbox col-6">
-            <p-radioButton
-              value="Cheese"
-              id="category2"
-              name="category2"
-              value="Clothing"
-              formControlName="category2"
-            ></p-radioButton>
-            <label for="category2">Eletrônicos</label>
-          </div>
-        </div>
-      </div> -->
-
       <div class="formgrid grid">
         <div class="field col">
           <label for="price">Valor da unidade</label>
@@ -176,32 +113,6 @@
           </p-inputNumber>
         </div>
       </div>
-
-      <!-- <div class="p-col-12 mt-2">
-        <span class="p-float-label">
-          <p-inputNumber
-            pTooltip="Valor da unidade"
-            inputId="currency-BRL"
-            mode="currency"
-            currency="BRL"
-            locale="pt-BR"
-            formControlName="price"
-            [(ngModel)]="addProductsForm.value.price"
-            [step]="0.1"
-          >
-          </p-inputNumber>
-        </span>
-      </div>
-      <div class="p-col-12 mt-2">
-        <span class="p-float-label">
-          <p-inputNumber
-            inputId="integeronly"
-            formControlName="quantity"
-            pTooltip="Quantidade itens"
-          >
-          </p-inputNumber>
-        </span>
-      </div> -->
     </div>
 
     <p-button

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, User, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';
+import { Register } from '../modules/interface/register.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,13 @@ import { Firestore, collection, getDocs, query, where } from '@angular/fire/fire
 export class AuthService {
   private user!: User;
 
-  constructor(public afAuth: Auth, private firestore: Firestore) { }
+  constructor(public afAuth: Auth, private firestore: Firestore) {
+    this.afAuth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log('User ID:', user.uid);
+      }
+    });
+   }
 
   async login(email: string, password: string) {
     const result = await signInWithEmailAndPassword(this.afAuth, email, password);
@@ -39,10 +46,7 @@ export class AuthService {
     return userInfo;
   }
 
-  // isLoggedIn(): boolean {
-  //   const JWT_TOKEN = this.cookie.get('auth-credential');
-  //   return JWT_TOKEN ? true : false;
-  // }
+
 
   getUserInfo(id: string): void {
     const registerRef = collection(this.firestore, 'Register');

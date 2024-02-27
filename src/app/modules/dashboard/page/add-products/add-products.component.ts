@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AddProductsService } from '../../../../service/dashboard/add-products.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddProducts } from '../../../interface/dashboard/addProducts.interface';
@@ -9,6 +9,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ThemePalette } from '@angular/material/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DashboardHomeComponent } from '../dashboard-home/dashboard-home.component';
 
 @Component({
   selector: 'app-add-products',
@@ -17,7 +19,7 @@ import { ThemePalette } from '@angular/material/core';
   providers: [MessageService, ConfirmationService,MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
 
 })
-export class AddProductsComponent {
+export class AddProductsComponent implements OnInit {
   addProductsForm!: FormGroup;
   products: AddProducts[] = [];
   value!: true;
@@ -29,7 +31,9 @@ export class AddProductsComponent {
   constructor(
     private addProductsService: AddProductsService,
     private fb: FormBuilder,
-    private storage: Storage
+    private storage: Storage,
+    public confirmationService: ConfirmationService,
+    public messageService: MessageService
   ) {
     this.addProductsForm = this.fb.group({
       imgProducts: ['', Validators.required],
@@ -40,6 +44,9 @@ export class AddProductsComponent {
       price: ['', Validators.required],
       quantity: ['', Validators.required],
     });
+
+  }
+  ngOnInit(): void {
 
   }
 
@@ -82,13 +89,13 @@ export class AddProductsComponent {
       .catch(error => console.log(error));
   }
 
-  stt() {
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' }
-    ];
-  }
+  // stt() {
+  //   this.statuses = [
+  //     { label: 'INSTOCK', value: 'instock' },
+  //     { label: 'LOWSTOCK', value: 'lowstock' },
+  //     { label: 'OUTOFSTOCK', value: 'outofstock' }
+  //   ];
+  // }
 
   getSeverity(status: string) {
     switch (status) {

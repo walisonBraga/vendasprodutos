@@ -1,12 +1,17 @@
 import { DashboardService } from './../../../../service/dashboard/dashboard.service';
-import { Component } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { AuthService } from '../../../../service/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AddProducts } from '../../../interface/dashboard/addProducts.interface';
 import { AddProductsService } from '../../../../service/dashboard/add-products.service';
-import { Firestore } from '@angular/fire/firestore';
-import { Subscription, debounceTime } from 'rxjs';
+import { Firestore, updateDoc } from '@angular/fire/firestore';
+import { Sidebar } from 'primeng/sidebar';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AddProductsComponent } from '../add-products/add-products.component';
+import { UpdateProductsService } from '../../../../service/dashboard/update-products.service';
+import { UpdateProducts } from '../../../interface/dashboard/updateProducts';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -14,10 +19,15 @@ import { Subscription, debounceTime } from 'rxjs';
   styleUrl: './dashboard-home.component.scss'
 })
 export class DashboardHomeComponent {
-  price: number = 123.45;
+  updateForm!: FormGroup;
   displayProducts: AddProducts[] = [];
   responsiveOptions: any[] | undefined;
-  chartOptions: any;
+  price: number = 123.45;
+  sidebarVisible: boolean = false;
+  visible: boolean = false;
+  statuses!: any[];
+  @ViewChild('sidebarRef') sidebarRef!: Sidebar;
+
 
 
   constructor(
@@ -26,10 +36,55 @@ export class DashboardHomeComponent {
     private router: Router,
     private addProductsService: AddProductsService,
     private dashboardService: DashboardService,
+    private updateProductsService: UpdateProductsService,
+    private _dialog: MatDialog,
+    private fb: FormBuilder,
     private firestore: Firestore
 
   ) {
 
+    this.updateForm = new FormGroup({
+      id: new FormControl(''),
+      imgProducts: new FormControl(''),
+      nome: new FormControl('', Validators.required),
+      description: new FormControl(''),
+      inventoryStatus: new FormControl(''),
+      category: new FormControl(''),
+      price: new FormControl(0, Validators.required),
+      quantity: new FormControl(0, Validators.required)
+    });
+
+
+  }
+
+  modalShow(uid: string): void {
+    this.visible = true;
+
+   this.addProductsService.getAddProducts(uid).subscribe((data: any) => {
+     console.log("DADOS DO SERVIÇO ADD PRODUCTS", data);
+     this.statuses = data.statuses;
+   })
+
+
+
+  }
+
+  // this.addProductsService.getAddProducts('').subscribe(
+  //   (product) => {
+  //     if (product) {
+  //       console.log("Detalhes do iten:", product);
+  //     } else {
+  //       console.log("Iten não encontrado");
+  //     }
+  //   },
+  //   (error) => {
+  //     console.error('Erro ao buscar detalhes do iten:', error);
+  //   }
+  // );
+
+
+  closeCallback(e: Event): void {
+    this.sidebarRef.close(e);
   }
 
   handleLogout(): void {
@@ -72,6 +127,22 @@ export class DashboardHomeComponent {
       default:
         throw new Error(`Invalid status: ${inventoryStatus}`);
     }
+  }
+
+  deleteProduct(uid: string): void {
+    this.addProductsService.deleteProduct(uid)
+      .then(() => {
+        console.log('Produto excluído com sucesso.');
+
+      })
+      .catch((error) => {
+        console.error('Erro ao excluir o produto:', error);
+
+      });
+  }
+
+  updateSubmit() {
+
   }
 
 }

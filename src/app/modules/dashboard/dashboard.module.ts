@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 //PrimeNg
@@ -40,6 +41,7 @@ import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
 import {MatSelectModule} from '@angular/material/select';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 //Pages
@@ -47,13 +49,15 @@ import { DashboardHomeComponent } from './page/dashboard-home/dashboard-home.com
 import { TolbarNavigationComponent } from './page/tolbar-navigation/tolbar-navigation.component';
 import { DASHBOARD_ROUTES } from './dashboard.routing';
 import { AddProductsComponent } from './page/add-products/add-products.component';
+import { ProfileComponent } from './settings/profile/profile.component';
 
 
 @NgModule({
   declarations: [
     DashboardHomeComponent,
     TolbarNavigationComponent,
-    AddProductsComponent
+    AddProductsComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +69,9 @@ import { AddProductsComponent } from './page/add-products/add-products.component
     MatChipsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatDialogModule,
 
+    //PrimeNg
     SidebarModule,
     InputGroupModule,
     InputGroupAddonModule,
@@ -95,6 +101,7 @@ import { AddProductsComponent } from './page/add-products/add-products.component
     TagModule,
     RadioButtonModule,
     DropdownModule,
+    ProgressSpinnerModule,
     RouterModule.forChild(DASHBOARD_ROUTES)
   ],
   providers: [

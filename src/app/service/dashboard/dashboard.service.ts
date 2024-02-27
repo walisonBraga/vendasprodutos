@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Firestore, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, deleteDoc, doc, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
 import { AddProducts } from '../../modules/interface/dashboard/addProducts.interface';
+import { Observable, from, of } from 'rxjs';
 
 
 
@@ -12,20 +13,18 @@ export class DashboardService {
 
   constructor(private firestore: Firestore) { }
 
-
-  itensQuantity(){
-    return this.getAllItems().then((snapshot: { docs: { data: () => any; id: any; }[]; })=>{
-      const items = snapshot.docs.map((doc: { data: () => any; id: any; }) => ({...doc.data(), id: doc.id})) as AddProducts[];
-      let quantidadeTotal = 0;
-      for (let i=0 ; i < items.length ; i++){
-        if(!items[i].quantity){
-          quantidadeTotal += items[i].quantity;
-        }
-      };
-      return quantidadeTotal;
-    })
+  addUse(user: AddProducts): Observable<any> {
+    const ref = doc(this.firestore, 'addProducts', user?.nome);
+    return from(setDoc(ref, user))
   }
 
+  updateProduct(product: AddProducts): Observable<AddProducts> {
+    return of(product); // Retorna um Observable com o produto atualizado
+  }
 
+  deleteProduct(productId: string) {
+    const productDoc = doc(this.firestore, `addProducts/${productId}`);
+    return deleteDoc(productDoc);
+  }
 
 }
