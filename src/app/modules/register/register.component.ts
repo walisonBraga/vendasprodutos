@@ -32,7 +32,7 @@ export class RegisterComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
-    
+
   }
 
   //   this.registerForm = fb.group({

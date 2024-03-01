@@ -3,24 +3,42 @@ import { DashboardHomeComponent } from './page/dashboard-home/dashboard-home.com
 import { TolbarNavigationComponent } from './page/tolbar-navigation/tolbar-navigation.component';
 import { AddProductsComponent } from './page/add-products/add-products.component';
 import { ProfileComponent } from './settings/profile/profile.component';
+import { StockComponent } from './page/stock/stock.component';
+import { AuthGuardService } from '../../service/AuthGuard.service';
+import { UpdateProductComponent } from './page/add-products/update-product/update-product.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
     path: '',
-    component: DashboardHomeComponent
+    component: DashboardHomeComponent,
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'tolbar',
-    component: TolbarNavigationComponent
+    component: TolbarNavigationComponent,
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'addProduct',
-    component: AddProductsComponent
+    component: AddProductsComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'updateProduct/:id',
+    component: UpdateProductComponent
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'perfil',
-    component: ProfileComponent
+    component: ProfileComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'stocks',
+    component: StockComponent,
+    // canActivate: [AuthGuardService]
   }
+
 ];
 
 export const DashboardRoutes = RouterModule.forChild(DASHBOARD_ROUTES);

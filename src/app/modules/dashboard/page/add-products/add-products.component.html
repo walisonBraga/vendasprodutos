@@ -1,127 +1,282 @@
 <app-tolbar-navigation></app-tolbar-navigation>
 <form [formGroup]="addProductsForm" (ngSubmit)="addProductsSubmit()">
-  <p-card
-    class="flex center justify-content-center align-content-center text-align-center"
-    header="Cadastro de Produtos"
-    [style]="{ width: '600px' }"
-  >
-    <div class="p-grid p-justify-center">
-      <div class="p-col-12 mt-2">
-        <div class="mb-3">
-          <label for="formFile" class="form-label">Img </label>
-          <input
-            class="form-control"
-            type="file"
-            id="formFile"
-            formControlName="imgProducts"
-            (change)="uploadImage($event)"
-          />
-          <div class="image-task">
-            <img [src]="addProductsForm.controls['imgProducts'].value" alt />
-          </div>
-        </div>
-      </div>
-      <div class="p-col-12 mt-2">
-        <span class="p-float-label">
-          <input
-            id="float-input"
-            type="text"
-            size="30"
-            pInputText
-            formControlName="nome"
-          />
-          <label for="float-input">Nome do Produto</label>
-        </span>
-      </div>
-      <div class="p-col-12 m-4">
-        <label class="flex justify-content-center" for="Description"
-          >Descrição do Produto</label
-        >
-        <div class="flex mt-2 m-3 justify-content-center">
-          <textarea
-            pTooltip="Descrição"
-            id="float-input"
-            rows="5"
-            cols="30"
-            pInputTextarea
-            [(ngModel)]="value"
-            formControlName="description"
-          ></textarea>
-        </div>
-      </div>
-      <div class="col-12">
-        <label class="flex justify-content-center" for="price">Estoque</label>
-        <div class="flex justify-content-center m-2 g-2">
-          <mat-radio-group
-            [(ngModel)]="inventoryStatus"
-            formControlName="inventoryStatus"
-            aria-label="Select an option"
-          >
-            <mat-radio-button class="m-2" value="EM ESTOQUE"
-              >EM ESTOQUE</mat-radio-button
-            >
-            <mat-radio-button class="m-2" value="BAIXO ESTOQUE"
-              >BAIXO ESTOQUE</mat-radio-button
-            >
-            <mat-radio-button class="m-2" value="FORA DE ESTOQUE"
-              >FORA DE ESTOQUE</mat-radio-button
-            >
-          </mat-radio-group>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <label class="flex justify-content-center" for="price">Categoria</label>
-        <div class="flex justify-content-center m-2 g-2">
-          <mat-radio-group
-            [(ngModel)]="category"
-            formControlName="category"
-            aria-label="Select an option"
-          >
-            <mat-radio-button class="m-2" value="eletronicos"
-              >Eletronicos</mat-radio-button
-            >
-            <mat-radio-button class="m-2" value="acessórios"
-              >Acessórios</mat-radio-button
-            >
-            <mat-radio-button class="m-2" value="gamer">Gamer</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-      <div class="formgrid grid">
-        <div class="field col">
-          <label for="price">Valor da unidade</label>
-          <p-inputNumber
-            pTooltip="Valor da unidade"
-            inputId="currency-BRL"
-            mode="currency"
-            currency="BRL"
-            locale="pt-BR"
-            formControlName="price"
-            [(ngModel)]="addProductsForm.value.price"
-            [step]="0.1"
-          >
-          </p-inputNumber>
-        </div>
-        <div class="field col">
-          <label for="quantity">Quantidade itens</label>
-          <p-inputNumber
-            inputId="integeronly"
-            formControlName="quantity"
-            pTooltip="Quantidade itens"
-          >
-          </p-inputNumber>
+  <div class="p-grid p-justify-center" >
+    <div
+      class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5"
+    >
+      <div
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
+      >
+        <label class="w-6rem">Img</label>
+        <input
+          class="form-control w-12rem"
+          type="file"
+          id="formFile"
+          formControlName="imgProducts"
+          (change)="uploadImage($event)"
+        />
+        <div class="image-task">
+          <img [src]="addProductsForm.controls['imgProducts'].value" alt />
         </div>
       </div>
     </div>
 
-    <p-button
-      class="btn btn-primary w-full mt-4 flex center justify-content-center"
-      label="confirmar"
-      type="submit"
-    ></p-button>
-  </p-card>
+    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+      <label class="w-6rem">Nome do Produto</label>
+      <input
+        pInputText
+        id="nome"
+        formControlName="nome"
+        type="text"
+        class="w-12rem"
+
+      />
+    </div>
+
+    <div
+      class="flex flex-wrap justify-content-center align-items-center gap-2 mt-3"
+    >
+      <label class="w-6rem">Descrição</label>
+      <textarea
+        class="w-12rem"
+        pTooltip="Descrição"
+        id="float-input"
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [(ngModel)]="value"
+        formControlName="description"
+      ></textarea>
+    </div>
+
+    <div
+      class="flex flex-wrap justify-content-center align-items-center gap-2 mt-3"
+    >
+      <label for="price" class="w-6rem">Valor da unidade</label>
+      <mat-radio-group
+        class="w-12rem"
+        [(ngModel)]="category"
+        formControlName="category"
+        aria-label="Select an option"
+      >
+        <mat-radio-button class="m-2" value="eletronicos"
+          >Eletronicos</mat-radio-button
+        >
+        <mat-radio-button class="m-2" value="acessórios"
+          >Acessórios</mat-radio-button
+        >
+        <mat-radio-button class="m-2" value="gamer">Gamer</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div
+      class="flex flex-wrap justify-content-center align-items-center gap-2 mt-3"
+    >
+      <label class="w-6rem">Estoque</label>
+      <mat-radio-group
+        class="w-12rem"
+        [(ngModel)]="inventoryStatus"
+        formControlName="inventoryStatus"
+        aria-label="Select an option"
+      >
+        <mat-radio-button class="m-2" value="EM ESTOQUE"
+          >EM ESTOQUE</mat-radio-button
+        >
+        <mat-radio-button class="m-2" value="BAIXO ESTOQUE"
+          >BAIXO ESTOQUE</mat-radio-button
+        >
+        <mat-radio-button class="m-2" value="FORA DE ESTOQUE"
+          >FORA DE ESTOQUE</mat-radio-button
+        >
+      </mat-radio-group>
+    </div>
+    <div
+      class="flex flex-wrap justify-content-center align-items-center gap-2 mt-3"
+    >
+      <label class="w-6rem">Valor da unidade</label>
+      <p-inputNumber
+        class="w-12rem"
+        pTooltip="Valor da unidade"
+        inputId="currency-BRL"
+        mode="currency"
+        currency="BRL"
+        locale="pt-BR"
+        formControlName="price"
+        [(ngModel)]="addProductsForm.value.price"
+        [step]="0.1"
+      >
+      </p-inputNumber>
+    </div>
+
+    <div
+      class="flex flex-wrap justify-content-center align-items-center gap-2 mt-3"
+    >
+      <label class="w-6rem">Quantidade itens</label>
+      <p-inputNumber
+        class="w-12rem"
+        inputId="integeronly"
+        formControlName="quantity"
+        pTooltip="Quantidade itens"
+      >
+      </p-inputNumber>
+    </div>
+  </div>
+
+  <p-button
+    class="btn btn-primary w-full mt-4 flex center justify-content-center"
+    label="confirmar"
+    type="submit"
+  ></p-button>
 </form>
+
+<!-- <form
+  class="flex flex-column md:flex-row"
+  [formGroup]="addProductsForm"
+  (ngSubmit)="addProductsSubmit()"
+>
+  <div
+    class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5"
+  >
+    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+      <label class="w-6rem">Img</label>
+      <input
+        class="form-control w-12rem"
+        type="file"
+        id="formFile"
+        formControlName="imgProducts"
+        (change)="uploadImage($event)"
+      />
+      <div class="image-task">
+        <img [src]="addProductsForm.controls['imgProducts'].value" alt />
+      </div>
+    </div>
+  </div>
+  <div class="w-full md:w-2">
+    <p-divider layout="vertical" styleClass="hidden md:flex"
+      ><b>OR</b></p-divider
+    >
+    <p-divider
+      layout="horizontal"
+      styleClass="flex md:hidden"
+      [align]="'center'"
+      ><b>OR</b></p-divider
+    >
+  </div>
+  <div
+    class="w-full md:w-5 flex align-items-center justify-content-center py-5"
+  >
+    <div
+      class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5"
+    >
+      <div
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
+      >
+        <label class="w-6rem">Nome do Produto</label>
+        <input
+          pInputText
+          id="nome"
+          formControlName="nome"
+          type="text"
+          class="w-12rem"
+        />
+      </div>
+
+      <div
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
+      >
+        <label class="w-6rem">Descrição</label>
+        <textarea
+          class="w-12rem"
+          pTooltip="Descrição"
+          id="float-input"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          [(ngModel)]="value"
+          formControlName="description"
+        ></textarea>
+      </div>
+
+      <div
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
+      >
+        <label class="w-6rem">Estoque</label>
+        <mat-radio-group
+          class="w-12rem"
+          [(ngModel)]="inventoryStatus"
+          formControlName="inventoryStatus"
+          aria-label="Select an option"
+        >
+          <mat-radio-button class="m-2" value="EM ESTOQUE"
+            >EM ESTOQUE</mat-radio-button
+          >
+          <mat-radio-button class="m-2" value="BAIXO ESTOQUE"
+            >BAIXO ESTOQUE</mat-radio-button
+          >
+          <mat-radio-button class="m-2" value="FORA DE ESTOQUE"
+            >FORA DE ESTOQUE</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+
+      <div
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
+      >
+        <label for="price" class="w-6rem">Valor da unidade</label>
+        <mat-radio-group
+          class="w-12rem"
+          [(ngModel)]="category"
+          formControlName="category"
+          aria-label="Select an option"
+        >
+          <mat-radio-button class="m-2" value="eletronicos"
+            >Eletronicos</mat-radio-button
+          >
+          <mat-radio-button class="m-2" value="acessórios"
+            >Acessórios</mat-radio-button
+          >
+          <mat-radio-button class="m-2" value="gamer">Gamer</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
+      >
+        <label class="w-6rem">Valor da unidade</label>
+        <p-inputNumber
+          class="w-12rem"
+          pTooltip="Valor da unidade"
+          inputId="currency-BRL"
+          mode="currency"
+          currency="BRL"
+          locale="pt-BR"
+          formControlName="price"
+          [(ngModel)]="addProductsForm.value.price"
+          [step]="0.1"
+        >
+        </p-inputNumber>
+      </div>
+
+      <div
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
+      >
+        <label class="w-6rem">Quantidade itens</label>
+        <p-inputNumber
+          class="w-12rem"
+          inputId="integeronly"
+          formControlName="quantity"
+          pTooltip="Quantidade itens"
+        >
+        </p-inputNumber>
+      </div>
+    </div>
+  </div>
+  <p-button
+    label="cadastrar"
+    icon="pi pi-plus"
+    styleClass="w-10rem mx-auto"
+  ></p-button>
+</form> -->
 
 <div *ngFor="let product of products">
   <h3>{{ product.nome }}</h3>

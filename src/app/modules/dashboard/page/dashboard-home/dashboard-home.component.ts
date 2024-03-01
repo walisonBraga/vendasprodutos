@@ -13,6 +13,12 @@ import { AddProductsComponent } from '../add-products/add-products.component';
 import { UpdateProductsService } from '../../../../service/dashboard/update-products.service';
 import { UpdateProducts } from '../../../interface/dashboard/updateProducts';
 
+interface PageEvent {
+  first: number;
+  rows: number;
+  page: number;
+  pageCount: number;
+}
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
@@ -26,6 +32,10 @@ export class DashboardHomeComponent {
   sidebarVisible: boolean = false;
   visible: boolean = false;
   statuses!: any[];
+
+  first: number = 0;
+  rows: number = 10;
+
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
 
 
@@ -57,35 +67,20 @@ export class DashboardHomeComponent {
 
   }
 
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+  }
+
   modalShow(uid: string): void {
     this.visible = true;
 
-   this.addProductsService.getAddProducts(uid).subscribe((data: any) => {
-     console.log("DADOS DO SERVIÇO ADD PRODUCTS", data);
-     this.statuses = data.statuses;
-   })
-
-
-
+    this.addProductsService.getAddProducts(uid).subscribe((data: any) => {
+      console.log("DADOS DO SERVIÇO ADD PRODUCTS", data);
+      this.statuses = data.statuses;
+    })
   }
 
-  // this.addProductsService.getAddProducts('').subscribe(
-  //   (product) => {
-  //     if (product) {
-  //       console.log("Detalhes do iten:", product);
-  //     } else {
-  //       console.log("Iten não encontrado");
-  //     }
-  //   },
-  //   (error) => {
-  //     console.error('Erro ao buscar detalhes do iten:', error);
-  //   }
-  // );
-
-
-  closeCallback(e: Event): void {
-    this.sidebarRef.close(e);
-  }
 
   handleLogout(): void {
     this.cookie.delete('auth-credential');
@@ -96,6 +91,7 @@ export class DashboardHomeComponent {
     this.addProductsService.getAddProducts('').subscribe(addProducts => {
       this.displayProducts = addProducts;
     });
+    
   }
 
   quantityOfItems() {
@@ -129,17 +125,7 @@ export class DashboardHomeComponent {
     }
   }
 
-  deleteProduct(uid: string): void {
-    this.addProductsService.deleteProduct(uid)
-      .then(() => {
-        console.log('Produto excluído com sucesso.');
 
-      })
-      .catch((error) => {
-        console.error('Erro ao excluir o produto:', error);
-
-      });
-  }
 
   updateSubmit() {
 

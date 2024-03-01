@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 //PrimeNg
@@ -40,8 +40,12 @@ import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { PaginatorModule } from 'primeng/paginator';
+import { ChartModule } from 'primeng/chart';
+import { DataViewModule } from 'primeng/dataview';
+import { DividerModule } from 'primeng/divider';
 
 
 //Pages
@@ -50,6 +54,8 @@ import { TolbarNavigationComponent } from './page/tolbar-navigation/tolbar-navig
 import { DASHBOARD_ROUTES } from './dashboard.routing';
 import { AddProductsComponent } from './page/add-products/add-products.component';
 import { ProfileComponent } from './settings/profile/profile.component';
+import { StockComponent } from './page/stock/stock.component';
+import { UpdateProductComponent } from './page/add-products/update-product/update-product.component';
 
 
 @NgModule({
@@ -57,7 +63,9 @@ import { ProfileComponent } from './settings/profile/profile.component';
     DashboardHomeComponent,
     TolbarNavigationComponent,
     AddProductsComponent,
-    ProfileComponent
+    ProfileComponent,
+    StockComponent,
+    UpdateProductComponent
   ],
   imports: [
     CommonModule,
@@ -102,6 +110,10 @@ import { ProfileComponent } from './settings/profile/profile.component';
     RadioButtonModule,
     DropdownModule,
     ProgressSpinnerModule,
+    PaginatorModule,
+    ChartModule,
+    DataViewModule,
+    DividerModule,
     RouterModule.forChild(DASHBOARD_ROUTES)
   ],
   providers: [

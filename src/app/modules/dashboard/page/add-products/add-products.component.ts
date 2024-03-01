@@ -6,11 +6,10 @@ import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { ThemePalette } from '@angular/material/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DashboardHomeComponent } from '../dashboard-home/dashboard-home.component';
+import { NotificationService } from '../../../../service/Notification/Notification.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-products',
@@ -22,18 +21,25 @@ import { DashboardHomeComponent } from '../dashboard-home/dashboard-home.compone
 export class AddProductsComponent implements OnInit {
   addProductsForm!: FormGroup;
   products: AddProducts[] = [];
+  updateProducts: AddProducts[] = [];
   value!: true;
   statuses!: any[];
   description!: false;
   inventoryStatus!: false;
   category!: false;
 
+  id!: string;
+
   constructor(
     private addProductsService: AddProductsService,
     private fb: FormBuilder,
+    private notificationService: NotificationService,
     private storage: Storage,
     public confirmationService: ConfirmationService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private firestore: Firestore
   ) {
     this.addProductsForm = this.fb.group({
       imgProducts: ['', Validators.required],
@@ -46,8 +52,11 @@ export class AddProductsComponent implements OnInit {
     });
 
   }
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+    });
   }
 
   async addProductsSubmit() {
@@ -65,6 +74,7 @@ export class AddProductsComponent implements OnInit {
         console.log('Produto adicionado com sucesso:', response);
         // adicionar o produto à lista
         this.products.push(addProducts);
+        this.notificationService.adicionarNotificacao();
 
         // limpar o formulário
         this.addProductsForm.reset();
@@ -89,14 +99,6 @@ export class AddProductsComponent implements OnInit {
       .catch(error => console.log(error));
   }
 
-  // stt() {
-  //   this.statuses = [
-  //     { label: 'INSTOCK', value: 'instock' },
-  //     { label: 'LOWSTOCK', value: 'lowstock' },
-  //     { label: 'OUTOFSTOCK', value: 'outofstock' }
-  //   ];
-  // }
-
   getSeverity(status: string) {
     switch (status) {
       case 'INSTOCK':
@@ -109,4 +111,6 @@ export class AddProductsComponent implements OnInit {
         throw new Error('Invalid status');
     }
   }
+
+
 }

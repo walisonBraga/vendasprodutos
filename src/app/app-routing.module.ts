@@ -3,12 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './modules/home/home.component';
 import { NavbarComponent } from './modules/navbar/navbar.component';
 import { LoginComponent } from './modules/login/login.component';
-import { AuthGuardService } from './service/auth-guard.service';
 import { RegisterComponent } from './modules/register/register.component';
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: 'home', component: HomeComponent
   },
   {
     path: 'navbar', component: NavbarComponent
@@ -23,9 +22,7 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./modules/dashboard/dashboard.module')
-        .then(m => m.DashboardModule),
-    canActivate: [AuthGuardService]
-
+        .then(m => m.DashboardModule)
   }
 ];
 

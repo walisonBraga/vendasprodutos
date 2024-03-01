@@ -1,7 +1,7 @@
-import { User, updateCurrentUser, updateProfile } from '@angular/fire/auth';
+import { User, updateProfile } from '@angular/fire/auth';
 import { Injectable } from "@angular/core";
 import { Firestore, collection, addDoc, collectionData, updateDoc, doc } from "@angular/fire/firestore";
-import { Observable, from, map, switchMap } from "rxjs";
+import { Observable } from "rxjs";
 import { Register } from "../modules/interface/register.interface";
 
 @Injectable({
@@ -29,25 +29,16 @@ export class RegisterService {
     return updateDoc(profileRef, { idField: id }) as Promise<void>;
   }
 
-  
 
+  // async updatePassword(userId: string, password: string): Promise<void> {
+  //   const userDocRef = doc(this.firestore, `Register/${userId}`);
 
-  // async updateUser(id: any): Promise<Observable<Register>> {
-  //   const userId = id(this.firestore, 'Register', 'uid');
-  //   return from(updateCurrentUser(userId, { ...id })).pipe(
-  //     switchMap(result => {
-  //       // Perform some action after updating the user, such as querying for the updated user data
-  //       return from(this.firestore('Register').doc(userId).get()).pipe(
-  //         map(doc => {
-  //           if (doc.exists) {
-  //             return doc.data() as Register;
-  //           } else {
-  //             throw new Error('User not found');
-  //           }
-  //         })
-  //       );
-  //     })
-  //   );
+  //   try {
+  //     await updateDoc(userDocRef, { password: password });
+  //     console.log('Senha atualizada no Firestore com sucesso!');
+  //   } catch (error) {
+  //     console.error('Erro ao atualizar senha no Firestore:', error);
+  //   }
   // }
 
 
