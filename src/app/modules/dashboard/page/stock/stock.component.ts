@@ -144,7 +144,6 @@ export class StockComponent implements OnInit {
           price: this.update.price,
           quantity: this.update.quantity
         });
-        // this.showDialog();
       }
     })
   }
@@ -164,6 +163,7 @@ export class StockComponent implements OnInit {
 
       this.updateProductsService.updateProduct(updatedItem).then(() => {
         console.log('Item atualizado com sucesso no Firestore!');
+        this.closeDialog();
       }).catch(error => {
         console.error('Erro ao atualizar item no Firestore:', error);
         // Trate o erro conforme necessário
