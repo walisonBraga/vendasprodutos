@@ -1,6 +1,6 @@
 <app-tolbar-navigation></app-tolbar-navigation>
 
-<form  [formGroup]="profileForm" (ngSubmit)="updateUser()" class="form-horizontal">
+<form  [formGroup]="profileForm" (ngSubmit)="updateUser($event)" class="form-horizontal">
   <p-card
     class="flex center justify-content-center align-content-center text-align-center"
     header="Perfil"

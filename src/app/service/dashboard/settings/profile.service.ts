@@ -33,11 +33,5 @@ export class ProfileService {
     return from(updateDoc(productDocRef, { ...productDocRef })) as unknown as Observable<Register>;
   }
 
-  // updateProfile(id: string, newData: Partial<Register>): Observable<any> {
-  //   const productDocRef = doc(this.firestore, 'Register', id);
-  //   const dataToUpdate = { ...productDocRef, ...newData };
-  //   return from(updateDoc(productDocRef, dataToUpdate)) as unknown as Observable<Register>;
-  // }
-
 
 }

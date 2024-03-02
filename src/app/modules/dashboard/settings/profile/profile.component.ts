@@ -1,9 +1,9 @@
+import { ProfileService } from './../../../../service/dashboard/settings/profile.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../service/auth.service';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { ProfileService } from '../../../../service/dashboard/settings/profile.service';
 import { Firestore, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 
 import { RegisterService } from '../../../../service/register.service';
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.auth.getCurrentUser();
+
     // Inicialização do formulário
     this.initializeForm();
   }
@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
 
   uploadImage(event: any): void {
     const file = event.target.files[0];
-    const storageRef = ref(this.storage, `img_Register/${file.nome}`);
+    const storageRef = ref(this.storage, `img_Register/${file.name}`);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -73,41 +73,41 @@ export class ProfileComponent implements OnInit {
           console.error('Erro ao obter URL de download:', error);
         });
     })
-    .catch(error => {
-      console.error('Erro ao fazer upload do arquivo:', error);
-    });
+      .catch(error => {
+        console.error('Erro ao fazer upload do arquivo:', error);
+      });
   }
 
 
 
 
-  updateUser() {
-    if (this.profileForm.invalid) return;
-    // const user = this.auth.getCurrentUser();
-    const user = `${this.user.sobrenome}`
-    const profileRef = doc(this.firestore, `Register/${user}`);
+  async updateUser(uid: string) {
     try {
-      if (!user) {
-        console.error('Nenhum usuário autenticado.');
+      const profileRef = doc(this.firestore, 'Register', uid);
+
+      // Ensure form data is valid before proceeding
+      if (!this.profileForm.valid) {
+        console.error('Form data is not valid');
         return;
       }
 
+      // Extract form data and update fields
       const userDataToUpdate = {
         imgUrl: this.profileForm.get('imgUrl')?.value,
         nome: this.profileForm.get('nome')?.value,
         sobrenome: this.profileForm.get('sobrenome')?.value,
         email: this.profileForm.get('email')?.value,
-        password: this.profileForm.get('password')?.value
+        // Hash the password before storing it
+        password: Function(this.profileForm.get('password')?.value),
       };
 
-      // Atualizar o perfil do usuário no Firestore
-      updateDoc(profileRef, userDataToUpdate);
-      console.log('Perfil atualizado com sucesso!');
-    } catch (error) {
-      console.error('Erro ao atualizar perfil:', error);
+      // Update the user's profile in Firestore
+      await setDoc(profileRef, userDataToUpdate);
+      console.log('Profile updated successfully!');
+    } catch (error: any) {
+      console.error('Error updating profile:', error);
     }
   }
-
 
 }
 

@@ -1,4 +1,5 @@
 export interface AddProducts {
+  uid: string;
   imgProducts: string;
   nome: string;
   description: string;

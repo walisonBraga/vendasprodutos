@@ -23,14 +23,19 @@ export class AddProductsService {
   }
 
 
-  updateProduct(uid: string, newData: Partial<AddProducts>): Promise<void> {
-    const productDoc = doc(this.firestore, `addProducts/${uid}`);
-    return updateDoc(productDoc, newData);
-  }
+  // updateProduct(uid: string, newData: Partial<AddProducts>): Promise<void> {
+  //   const productDoc = doc(this.firestore, `addProducts/${uid}`);
+  //   return updateDoc(productDoc, newData);
+  // }
 
   deleteProduct(uid: string): Promise<void> {
     const productDelete = doc(this.firestore, 'addProducts', uid);
     return deleteDoc(productDelete);
   }
+
+  updateProduct(uid: string, newData: Partial<AddProducts>): Promise<void> {
+    const productDoc = doc(this.firestore, 'addProducts', uid);
+    return updateDoc(productDoc, newData);
+}
 }
 

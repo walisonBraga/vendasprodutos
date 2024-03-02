@@ -1,9 +1,8 @@
 <app-tolbar-navigation></app-tolbar-navigation>
-<form [formGroup]="updateProductsForm" (ngSubmit)="UpdateProducts()">
+<form [formGroup]="updateProductsForm" (ngSubmit)="updateOnSubmit()">
   <div class="p-grid p-justify-center">
     <div
       class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5"
-
     >
       <div
         class="flex flex-wrap justify-content-center align-items-center gap-2"
@@ -30,7 +29,7 @@
         formControlName="nome"
         type="text"
         class="w-12rem"
-        [(ngModel)]="update"
+        [(ngModel)]="updateProductsForm.value.nome"
       />
     </div>
 
@@ -47,7 +46,7 @@
         pInputTextarea
         [(ngModel)]="value"
         formControlName="description"
-
+        [(ngModel)]="updateProductsForm.value.description"
       ></textarea>
     </div>
 
@@ -60,7 +59,7 @@
         [(ngModel)]="category"
         formControlName="category"
         aria-label="Select an option"
-
+        [(ngModel)]="updateProductsForm.value.category"
       >
         <mat-radio-button class="m-2" value="eletronicos"
           >Eletronicos</mat-radio-button
@@ -81,7 +80,7 @@
         [(ngModel)]="inventoryStatus"
         formControlName="inventoryStatus"
         aria-label="Select an option"
-
+        [(ngModel)]="updateProductsForm.value.inventoryStatus"
       >
         <mat-radio-button class="m-2" value="EM ESTOQUE"
           >EM ESTOQUE</mat-radio-button
@@ -108,7 +107,6 @@
         formControlName="price"
         [(ngModel)]="updateProductsForm.value.price"
         [step]="0.1"
-
       >
       </p-inputNumber>
     </div>
@@ -122,6 +120,7 @@
         inputId="integeronly"
         formControlName="quantity"
         pTooltip="Quantidade itens"
+        [(ngModel)]="updateProductsForm.value.quantity"
       >
       </p-inputNumber>
     </div>
@@ -133,9 +132,3 @@
     type="submit"
   ></p-button>
 </form>
-
-
-<div *ngFor="let product of updateProducts">
-  <h3>{{ product.nome }}</h3>
-  <p>{{ product.price }}</p>
-</div>

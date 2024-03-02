@@ -1,3 +1,4 @@
+import { UpdateProductsService } from './../../../../service/dashboard/update-products.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { AddProductsService } from '../../../../service/dashboard/add-products.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -28,10 +29,11 @@ export class AddProductsComponent implements OnInit {
   inventoryStatus!: false;
   category!: false;
 
+  uid: string | null = null;
   id!: string;
 
   constructor(
-    private addProductsService: AddProductsService,
+    private updateProductsService: UpdateProductsService,
     private fb: FormBuilder,
     private notificationService: NotificationService,
     private storage: Storage,
@@ -68,8 +70,9 @@ export class AddProductsComponent implements OnInit {
       category: this.addProductsForm.value.category,
       price: this.addProductsForm.value.price,
       quantity: this.addProductsForm.value.quantity,
+      uid: ''
     };
-    this.addProductsService.addProducts(addProducts)
+    this.updateProductsService.addProducts(addProducts)
       .then(response => {
         console.log('Produto adicionado com sucesso:', response);
         // adicionar o produto à lista

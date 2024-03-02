@@ -24,9 +24,8 @@ export const DASHBOARD_ROUTES: Routes = [
     // canActivate: [AuthGuardService]
   },
   {
-    path: 'updateProduct/:id',
+    path: 'update-product/:id',
     component: UpdateProductComponent
-    // canActivate: [AuthGuardService]
   },
   {
     path: 'perfil',

@@ -63,14 +63,24 @@ export class AuthService {
   getUserInfo(id: string): void {
     const registerRef = collection(this.firestore, 'Register');
     const queryResponse = query(registerRef, where("uid", "==", id));
-    getDocs(queryResponse).then(res => {
-      if (res) {
-        const data = res.docs[0].data();
-        delete data['password'];
-        localStorage.setItem('user-credential', JSON.stringify(data));
-      }
-    })
+    getDocs(queryResponse)
+      .then(res => {
+        if (res && res.docs.length > 0) {
+          const data = res.docs[0].data();
+          // Check if 'password' field exists before deleting
+          if (data.hasOwnProperty('password')) {
+            delete data['password'];
+          }
+          localStorage.setItem('user-credential', JSON.stringify(data));
+        } else {
+          console.error("No user found with the provided ID.");
+        }
+      })
+      .catch(error => {
+        console.error("Error retrieving user information:", error);
+      });
   }
+
 
 
   isLoggedIn(): boolean {

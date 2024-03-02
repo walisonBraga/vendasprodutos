@@ -23,10 +23,10 @@ export class RegisterService {
     return collectionData(registerRef, { idField: id }) as Observable<Register[]>;
   }
 
-  updateProfile(id: string): Promise<void> {
-    const profileRef = doc(this.firestore, `Register/${id}`);
+  updateProfile(uid: string): Promise<void> {
+    const profileRef = doc(this.firestore, `Register/${uid}`);
     // Atualizar o perfil do usuário no Firestore
-    return updateDoc(profileRef, { idField: id }) as Promise<void>;
+    return updateDoc(profileRef, { idField: uid }) as Promise<void>;
   }
 
 

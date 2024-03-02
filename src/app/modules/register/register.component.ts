@@ -51,8 +51,9 @@ export class RegisterComponent {
 
     const body = {
       ...this.registerForm.value,
-      'uid': authResponse.user.uid,
+      'id': authResponse.user.uid,
     }
+
     this.registerForm.reset();
     const registerRef = await this.register.addRegister(body);
     return registerRef;

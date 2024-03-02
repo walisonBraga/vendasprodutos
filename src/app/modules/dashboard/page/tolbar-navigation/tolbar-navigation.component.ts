@@ -16,6 +16,14 @@ export class TolbarNavigationComponent  implements OnInit {
   sidebarVisible: boolean = false;
   quantidadeNotificacoes: number = 0;
 
+
+
+  isDarkTheme = false;
+
+  toggleDarkTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+  }
+
   constructor(
     private register: RegisterService,
      private auth: AuthService,
