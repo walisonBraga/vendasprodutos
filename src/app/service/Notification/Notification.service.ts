@@ -21,8 +21,7 @@ export class NotificationService {
   adicionarNotificacao() {
     const valorAtual = this._quantidadeNotificacoes.getValue() + 1;
     this._quantidadeNotificacoes.next(valorAtual);
-    localStorage.setItem(this.STORAGE_KEY, valorAtual.toString());
-
+    // localStorage.setItem(this.STORAGE_KEY, valorAtual.toString());
     setTimeout(() => {
       this.initQuantidadeNotificacoes();
     }, 5000);

@@ -1,6 +1,6 @@
 import { UpdateProductsService } from './../../../../service/dashboard/update-products.service';
 import { UpdateProducts } from './../../../interface/dashboard/updateProducts';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddProducts } from '../../../interface/dashboard/addProducts.interface';
 import { AddProductsService } from '../../../../service/dashboard/add-products.service';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../../service/Notification/Notification.service';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-stock',
@@ -20,6 +21,8 @@ export class StockComponent implements OnInit {
   responsiveOptions: any[] | undefined;
   price: number = 123.45;
   visible: boolean = false;
+  @ViewChild('dt') table!: Table;
+  noRecordsMessage = 'Nenhum item encontrado';
 
   update!: UpdateProducts | undefined;
 
@@ -27,6 +30,8 @@ export class StockComponent implements OnInit {
   description!: false;
   inventoryStatus!: false;
   category!: false;
+
+  selectedProducts!: UpdateProducts[] | null;
 
   constructor(
     private addProductsService: AddProductsService,
@@ -48,6 +53,19 @@ export class StockComponent implements OnInit {
       quantity: new FormControl(0, Validators.required)
     });
   }
+
+  filterGlobal(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.table.filterGlobal(filterValue, 'contains');
+
+    // Verifica se nenhum item foi encontrado e atualiza a mensagem
+    if (this.table.filteredValue && this.table.filteredValue.length === 0) {
+      this.noRecordsMessage = 'Nenhum item encontrado';
+    } else {
+      this.noRecordsMessage = '';
+    }
+  }
+
 
   getSeverity(inventoryStatus: string) {
     switch (inventoryStatus) {
@@ -95,6 +113,7 @@ export class StockComponent implements OnInit {
       }
     });
   }
+
 
 
   deleteProduct(uid: string): void {

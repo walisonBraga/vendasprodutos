@@ -182,6 +182,7 @@
       styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
       class="w-full"
       type="submit"
+      [disabled]="!addProductsForm.value || addProductsForm.invalid"
     ></p-button>
   </div>
 </form>

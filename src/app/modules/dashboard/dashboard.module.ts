@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -46,6 +46,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ChartModule } from 'primeng/chart';
 import { DataViewModule } from 'primeng/dataview';
 import { DividerModule } from 'primeng/divider';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 //Pages
@@ -112,11 +114,14 @@ import { StockComponent } from './page/stock/stock.component';
     ChartModule,
     DataViewModule,
     DividerModule,
+    TriStateCheckboxModule,
+    CheckboxModule,
     RouterModule.forChild(DASHBOARD_ROUTES)
   ],
   providers: [
     MessageService,
     CookieService,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DashboardModule { }
