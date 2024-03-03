@@ -32,6 +32,16 @@ export class AddProductsComponent implements OnInit {
   uid: string | null = null;
   id!: string;
 
+  visible: boolean = false;
+
+  showDialog() {
+      this.visible = true;
+  }
+
+  closeDialog() {
+      this.visible = false;
+  }
+
   constructor(
     private updateProductsService: UpdateProductsService,
     private fb: FormBuilder,
@@ -54,6 +64,11 @@ export class AddProductsComponent implements OnInit {
     });
 
   }
+
+  onImageError(event: any) {
+    event.target.src = '../../../../../assets/img_Products/_9e6da119-bf43-4454-8203-8226c263bb6c.jpg'; // Caminho da imagem de substituição
+  }
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

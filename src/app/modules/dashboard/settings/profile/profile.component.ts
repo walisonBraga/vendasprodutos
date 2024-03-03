@@ -2,14 +2,11 @@ import { ProfileService } from './../../../../service/dashboard/settings/profile
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../service/auth.service';
-import { Storage, ref, uploadBytes } from '@angular/fire/storage';
+import { Storage, ref } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { Firestore, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
-import { RegisterService } from '../../../../service/register.service';
-import { updateCurrentUser, updatePassword } from '@angular/fire/auth';
 import { Register } from '../../../interface/register.interface';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { UntilDestroy } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -20,13 +17,11 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
-  value: any;
   user: any;
 
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
-    private register: RegisterService,
     private auth: AuthService,
     private storage: Storage,
     private firestore: Firestore
@@ -41,8 +36,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // Inicialização do formulário
     this.initializeForm();
   }
 
@@ -56,6 +49,7 @@ export class ProfileComponent implements OnInit {
       password: new FormControl(this.user?.password),
     });
   }
+
 
   uploadImage(event: any): void {
     const file = event.target.files[0];
@@ -78,35 +72,28 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-
-
-
-  async updateUser(uid: string) {
-    try {
-      const profileRef = doc(this.firestore, 'Register', uid);
-
-      // Ensure form data is valid before proceeding
-      if (!this.profileForm.valid) {
-        console.error('Form data is not valid');
-        return;
-      }
-
-      // Extract form data and update fields
-      const userDataToUpdate = {
-        imgUrl: this.profileForm.get('imgUrl')?.value,
-        nome: this.profileForm.get('nome')?.value,
-        sobrenome: this.profileForm.get('sobrenome')?.value,
-        email: this.profileForm.get('email')?.value,
-        // Hash the password before storing it
-        password: Function(this.profileForm.get('password')?.value),
+  profileUpdate(uid: string) {
+    if (this.user && this.profileForm.valid) {
+      const updatedProfile: Register = {
+        ...this.user,
+        imgUrl: this.profileForm.value.imgUrl,
+        nome: this.profileForm.value.nome,
+        sobrenome: this.profileForm.value.sobrenome,
+        email: this.profileForm.value.email,
+        password: this.profileForm.value.password
       };
 
-      // Update the user's profile in Firestore
-      await setDoc(profileRef, userDataToUpdate);
-      console.log('Profile updated successfully!');
-    } catch (error: any) {
-      console.error('Error updating profile:', error);
+      this.profileService.updateProfile(updatedProfile).then(() => {
+        console.log('Perfil atualizado com sucesso no Firestore!');
+      }).catch(error => {
+        console.error('Erro ao atualizar perfil no Firestore:', error);
+        // Trate o erro conforme necessário (por exemplo, exibindo uma mensagem de erro para o usuário)
+      });
+    } else {
+      console.error('Erro: Usuário não definido ou formulário inválido.');
+      // Trate o erro conforme necessário (por exemplo, exibindo uma mensagem de erro para o usuário)
     }
+    return uid;
   }
 
 }

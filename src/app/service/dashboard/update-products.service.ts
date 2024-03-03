@@ -20,12 +20,12 @@ export class UpdateProductsService {
     return collectionData(productsRef, { idField: 'uid' }) as Observable<UpdateProducts[]>;
   }
 
-  async listProduct() {
-    const querySnapshot = await getDocs(collection(this.firestore, 'addProducts'));
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
-    });
-  }
+  // async listProduct() {
+  //   const querySnapshot = await getDocs(collection(this.firestore, 'addProducts'));
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(doc.id, ' => ', doc.data());
+  //   });
+  // }
 
   async updateProduct(update: UpdateProducts): Promise<void> {
     const productId = update.uid;

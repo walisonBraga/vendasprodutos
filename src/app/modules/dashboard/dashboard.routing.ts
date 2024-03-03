@@ -5,7 +5,7 @@ import { AddProductsComponent } from './page/add-products/add-products.component
 import { ProfileComponent } from './settings/profile/profile.component';
 import { StockComponent } from './page/stock/stock.component';
 import { AuthGuardService } from '../../service/AuthGuard.service';
-import { UpdateProductComponent } from './page/add-products/update-product/update-product.component';
+
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -22,10 +22,6 @@ export const DASHBOARD_ROUTES: Routes = [
     path: 'addProduct',
     component: AddProductsComponent,
     // canActivate: [AuthGuardService]
-  },
-  {
-    path: 'update-product/:id',
-    component: UpdateProductComponent
   },
   {
     path: 'perfil',

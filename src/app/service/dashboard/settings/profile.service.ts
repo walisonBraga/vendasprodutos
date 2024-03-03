@@ -1,13 +1,16 @@
-import { Auth, updateProfile } from '@angular/fire/auth';
+import { Auth, User } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, CollectionReference, deleteDoc, doc, docData, DocumentReference, DocumentSnapshot, Firestore, getDoc, getFirestore, serverTimestamp, setDoc, updateDoc, } from '@angular/fire/firestore';
-import { filter, from, map, Observable, of, shareReplay, switchMap } from 'rxjs';
+import { addDoc, collection, collectionData, CollectionReference, doc, DocumentReference, Firestore, getDoc, setDoc, updateDoc, } from '@angular/fire/firestore';
+import { Observable, from } from 'rxjs';
 import { Register } from '../../../modules/interface/register.interface';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
+  private user!: User;
+
   constructor(private firestore: Firestore, private afAuth: Auth) { }
 
   addUser(user: Register) {
@@ -15,23 +18,32 @@ export class ProfileService {
     return from(addDoc(userRef, { ...user }));
   }
 
-  // getUser(uid: string): Observable<Register | undefined> {
-  //   const userRef = doc(this.firestore, 'Register', uid);
-  //   return from(userRef.get('')).pipe(
-  //     map((docSnapshot: DocumentSnapshot<Register>) => {
-  //       if (docSnapshot.exists()) {
-  //         return { id: docSnapshot.id, ...docSnapshot.data() } as Register;
-  //       } else {
-  //         return undefined;
-  //       }
-  //     })
-  //   );
-  // }
+  getProfile(id: string): Observable<Register[]> {
+    const profileRef = collection(this.firestore, 'Register' + id);
+    return collectionData(profileRef, { idField: 'uid' }) as Observable<Register[]>;
+  }
 
-  updateProfile(id: string): Observable<Register> {
-    const productDocRef = doc(this.firestore, 'Register', id);
-    return from(updateDoc(productDocRef, { ...productDocRef })) as unknown as Observable<Register>;
+  getUserById(userId: string): Observable<Register | undefined> {
+    const userRef = doc(this.firestore, 'Register', userId);
+    return new Observable<Register | undefined>(observer => {
+      getDoc(userRef).then(docSnapshot => {
+        if (docSnapshot.exists()) {
+          const userData = docSnapshot.data() as Register;
+          observer.next(userData);
+        } else {
+          observer.next(undefined); // Documento não encontrado
+        }
+        observer.complete();
+      }).catch(error => {
+        observer.error(error); // Tratar erro, se necessário
+      });
+    });
   }
 
 
+  async updateProfile(update: Register): Promise<void> {
+    const productId = update.uid;
+    const productRef: DocumentReference = doc(this.firestore, 'Register', productId);
+    await setDoc(productRef, { ...update } );
+  }
 }

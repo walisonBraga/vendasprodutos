@@ -55,7 +55,6 @@ import { DASHBOARD_ROUTES } from './dashboard.routing';
 import { AddProductsComponent } from './page/add-products/add-products.component';
 import { ProfileComponent } from './settings/profile/profile.component';
 import { StockComponent } from './page/stock/stock.component';
-import { UpdateProductComponent } from './page/add-products/update-product/update-product.component';
 
 
 @NgModule({
@@ -65,7 +64,6 @@ import { UpdateProductComponent } from './page/add-products/update-product/updat
     AddProductsComponent,
     ProfileComponent,
     StockComponent,
-    UpdateProductComponent
   ],
   imports: [
     CommonModule,

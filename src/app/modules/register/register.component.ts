@@ -6,6 +6,7 @@ import { RegisterService } from '../../service/register.service';
 import { MessageService } from 'primeng/api';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,6 @@ export class RegisterComponent {
     private router: Router,
     private auth: AuthService,
     private register: RegisterService,
-    private messageService: MessageService,
     private storage: Storage
   ) {
     this.registerForm = fb.group({
@@ -35,27 +35,17 @@ export class RegisterComponent {
 
   }
 
-  //   this.registerForm = fb.group({
-  //     imgUrl: this.auth.getCurrentUser() ? [this.auth.getCurrentUser().imgUrl] : ['', Validators.required],
-  //     nome: this.auth.getCurrentUser() ? [this.auth.getCurrentUser().nome] : ['', Validators.required],
-  //     sobrenome: this.auth.getCurrentUser() ? [this.auth.getCurrentUser().nome] : ['', Validators.required],
-  //     email: this.auth.getCurrentUser() ? null : ['', [Validators.required, Validators.email]],
-  //     password: this.auth.getCurrentUser() ? null : ['', Validators.required],
-  //   });
-  // }
-
-
   async onSubmit() {
     if (this.registerForm.invalid) return;
+    const uid = uuidv4();
     const authResponse = await this.auth.register(this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
 
     const body = {
       ...this.registerForm.value,
-      'id': authResponse.user.uid,
-    }
-
-    this.registerForm.reset();
+      'uid': authResponse.user?.uid,
+    };
     const registerRef = await this.register.addRegister(body);
+    this.registerForm.reset();
     return registerRef;
   }
 

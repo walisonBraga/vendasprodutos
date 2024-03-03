@@ -8,9 +8,7 @@ import { Register } from "../modules/interface/register.interface";
   providedIn: 'root'
 })
 export class RegisterService {
-  user: any;
-  profileForm: any;
-  afs: any;
+
   constructor(private firestore: Firestore) { }
 
   addRegister(register: Register) {
@@ -22,24 +20,5 @@ export class RegisterService {
     const registerRef = collection(this.firestore, 'Register');
     return collectionData(registerRef, { idField: id }) as Observable<Register[]>;
   }
-
-  updateProfile(uid: string): Promise<void> {
-    const profileRef = doc(this.firestore, `Register/${uid}`);
-    // Atualizar o perfil do usuário no Firestore
-    return updateDoc(profileRef, { idField: uid }) as Promise<void>;
-  }
-
-
-  // async updatePassword(userId: string, password: string): Promise<void> {
-  //   const userDocRef = doc(this.firestore, `Register/${userId}`);
-
-  //   try {
-  //     await updateDoc(userDocRef, { password: password });
-  //     console.log('Senha atualizada no Firestore com sucesso!');
-  //   } catch (error) {
-  //     console.error('Erro ao atualizar senha no Firestore:', error);
-  //   }
-  // }
-
 
 }

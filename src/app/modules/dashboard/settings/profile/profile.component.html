@@ -1,13 +1,13 @@
 <app-tolbar-navigation></app-tolbar-navigation>
 
-<form  [formGroup]="profileForm" (ngSubmit)="updateUser($event)" class="form-horizontal">
+<form [formGroup]="profileForm" class="form-horizontal">
   <p-card
     class="flex center justify-content-center align-content-center text-align-center"
     header="Perfil"
     subheader="Card Subheader"
     [style]="{ width: '390px' }"
   >
-    <div  class="p-grid p-justify-center">
+    <div class="p-grid p-justify-center">
       <div class="p-col-12 mt-2">
         <div class="mb-3">
           <label for="formFile" class="form-label">Img </label>
@@ -16,6 +16,7 @@
             type="file"
             id="formFile"
             formControlName="imgUrl"
+            [(ngModel)]="user.imgUrl"
             (change)="uploadImage($event)"
           />
           <div class="image-task">
@@ -35,7 +36,7 @@
             size="30"
             pInputText
             formControlName="nome"
-            [(ngModel)]="user!.nome"
+            [(ngModel)]="user.nome"
           />
           <label for="float-nome">Nome</label>
         </span>
@@ -48,7 +49,7 @@
             size="30"
             pInputText
             formControlName="sobrenome"
-            [(ngModel)]="user!.sobrenome"
+            [(ngModel)]="user.sobrenome"
           />
           <label for="float-sobrenome">Sobrenome</label>
         </span>
@@ -61,7 +62,7 @@
             size="30"
             pInputText
             formControlName="email"
-            [(ngModel)]="user!.email"
+            [(ngModel)]="user.email"
           />
           <label for="float-email">Email</label>
         </span>
@@ -74,7 +75,7 @@
             size="30"
             pInputText
             formControlName="password"
-            [(ngModel)]="user!.password"
+            [(ngModel)]="user.password"
           />
           <label for="float-password">Senha</label>
         </span>
@@ -83,24 +84,9 @@
 
     <p-button
       class="btn btn-primary w-full mt-4 flex center justify-content-center"
-      label="Atualizar"
+      label="SALVAR ALTERAÇÕES"
       type="submit"
+      (click)="profileUpdate(user.uid)"
     ></p-button>
-
-    <!-- <p-button
-      class="btn btn-primary w-full mt-4 flex center justify-content-center"
-      label="Update"
-      type="submit"
-      (click)="update(user)"
-    ></p-button> -->
   </p-card>
 </form>
-
-<!--
-<div *ngIf="register$ | async as registers">
-  <div *ngFor="let register of registers">
-    <h2>{{ register.nome }} {{ register.sobrenome }}</h2>
-    <p>Email: {{ register.email }}</p>
-  </div>
-</div>
--->

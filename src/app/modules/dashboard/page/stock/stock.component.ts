@@ -62,20 +62,23 @@ export class StockComponent implements OnInit {
     }
   }
 
-  updateNgSubmit() { }
-
   adicionarNotificacao() {
     this.notificationService.adicionarNotificacao();
   }
+
+  onImageError(event: any) {
+    event.target.src = '../../../../../assets/img_Products/semImagem.jpg'; // Caminho da imagem de substituição
+  }
+
 
   ngOnInit() {
     this.addProductsService.getAddProducts('').subscribe(addProducts => {
       this.stocks = addProducts;
     });
-    this.initializeForm();
+    this.updateStocks();
   }
 
-  private initializeForm(): void {
+  private updateStocks(): void {
     this.updateProductsService.getProducts().subscribe((data) => {
       // Assuming `data` is the array of products received from the service
       if (data && data.length > 0) {

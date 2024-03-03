@@ -2,13 +2,18 @@
 
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <p-card
-    class="flex m-8 justify-content-center "
+    class="flex m-8 justify-content-center"
     header="login"
     subheader="Produtos"
     [style]="{ width: '390px' }"
   >
     <ng-template pTemplate="header" class="flex flex-column align-items-start">
-      <img id="imgLogin" class="flex block m-auto pb-3 column-gap-lg-5 " alt="Card" src="../../../assets/img_login/logo.jpg" />
+      <img
+        id="imgLogin"
+        class="flex block m-auto pb-3 column-gap-lg-5"
+        alt="Card"
+        src="../../../assets/img_login/logo.jpg"
+      />
     </ng-template>
     <div class="p-grid p-justify-center" style="position: absolut">
       <div class="flex p-col-12 mt-2">
@@ -60,14 +65,6 @@
       pRipple
       label="Confirma"
       type="submit"
-      
     ></button>
-
-    <!-- <p-button
-      class="btn btn-primary w-full mt-4 flex center justify-content-center"
-      label="Login"
-      type="submit"
-      [disabled]="loginForm.invalid"
-    ></p-button> -->
   </p-card>
 </form>
