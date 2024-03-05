@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="loginForm">
   <p-card
     class="flex m-8 justify-content-center"
     header="login"
@@ -58,13 +58,21 @@
         </div>
       </ng-template>
     </p-toast>
-    <button
-      class="btn btn-primary w-full mt-4 flex center justify-content-center"
-      type="button"
-      pButton
-      pRipple
-      label="Confirma"
-      type="submit"
-    ></button>
+    <div class="flex align-items-center gap-2">
+      <p-button
+        [label]="!loading ? 'Confirmar' : 'loading...'"
+        [disabled]="loading || loginForm.invalid"
+        (click)="loadData()"
+        class="btn btn-primary w-full mt-4 flex center justify-content-center"
+      >
+      <p-progressSpinner
+    *ngIf="loading"
+    styleClass="w-3rem h-3rem"
+    strokeWidth="5"
+    animationDuration=".45s"
+  ></p-progressSpinner>
+    </p-button>
+
+    </div>
   </p-card>
 </form>

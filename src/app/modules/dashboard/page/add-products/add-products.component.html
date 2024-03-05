@@ -2,7 +2,6 @@
 
 <form
   [formGroup]="addProductsForm"
-  (ngSubmit)="addProductsSubmit()"
   class="flex flex-column justify-content-center align-content-center px-8 py-5 gap-4"
   style="
     border-radius: 12px;
@@ -20,29 +19,29 @@
       class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5"
     >
       <div
-        class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5"
+        class="flex flex-wrap justify-content-center align-items-center gap-2"
       >
-        <div
-          class="flex flex-wrap justify-content-center align-items-center gap-2"
-        >
-          <label class="w-6rem">Img</label>
-          <input
-            class="form-control w-12rem"
-            type="file"
-            id="formFile"
-            formControlName="imgProducts"
-            (change)="uploadImage($event)"
+        <label class="w-6rem">Img</label>
+        <input
+          class="form-control w-12rem"
+          type="file"
+          id="formFile"
+          formControlName="imgProducts"
+          mode="basic"
+          chooseLabel="Choose"
+          (change)="onImageUpload($event)"
+        />
+        <div class="image-task">
+          <img
+            class="flex"
+            width="600px"
+            height="500px"
+            a
+            [src]="addProductsForm.controls['imgProducts'].value"
+            (error)="onImageError($event)"
           />
-          <div class="image-task">
-            <img
-              class="flex"
-              width="600px"
-              height="500px"
-              [src]="addProductsForm.controls['imgProducts'].value"
-              (error)="onImageError($event)"
-            />
-          </div>
         </div>
+        <div *ngIf="loading" class="loader"></div>
       </div>
     </div>
     <div class="w-full md:w-2">
@@ -156,6 +155,14 @@
             [step]="0.1"
           >
           </p-inputNumber>
+          <p-message
+            *ngIf="
+              addProductsForm.controls['price'].invalid &&
+              addProductsForm.controls['price'].touched
+            "
+            severity="error"
+            text="O campo Preço é obrigatório"
+          ></p-message>
         </div>
 
         <div class="inline-flex flex-column gap-2">
@@ -171,23 +178,47 @@
             pTooltip="Quantidade itens"
           >
           </p-inputNumber>
+          <p-message
+            *ngIf="
+              addProductsForm.controls['quantity'].invalid &&
+              addProductsForm.controls['quantity'].touched
+            "
+            severity="error"
+            text="O campo Quantidade é obrigatório"
+          ></p-message>
         </div>
       </div>
     </div>
   </div>
   <div class="flex align-items-center gap-2">
     <p-button
-      label="Confirmar"
-      [text]="true"
+      icon="pi pi-check"
+      [label]="!loading ? 'Confirmar' : 'loading...'"
+      loadingIcon="pi pi-spin pi-spinner"
+      styleClass="font-size: 2rem"
       styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
       class="w-full"
       type="submit"
-      [disabled]="!addProductsForm.value || addProductsForm.invalid"
-    ></p-button>
+      [disabled]="
+        loading ||
+        addProductsForm.controls['price'].value === 0 ||
+        addProductsForm.controls['quantity'].value === 0 ||
+        addProductsForm.invalid
+      "
+      (click)="loadData()"
+    >
+    </p-button>
+    <p-progressSpinner
+      *ngIf="loading"
+      styleClass="w-3rem h-3rem"
+      strokeWidth="5"
+      animationDuration=".45s"
+    ></p-progressSpinner>
   </div>
 </form>
 
-<div *ngFor="let product of products">
-  <h3>{{ product.nome }}</h3>
-  <p>{{ product.price }}</p>
+<div class="card flex justify-content-center">
+  <p-toast
+    [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+  ></p-toast>
 </div>

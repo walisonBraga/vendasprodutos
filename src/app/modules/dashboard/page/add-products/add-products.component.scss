@@ -12,3 +12,12 @@ form{
   flex: auto;
   margin: auto;
 }
+
+.isLoading {
+  opacity: 0;
+  transition: opacity 0.15s ease-out; /* Tempo e curva de transição */
+}
+
+.messages-container {
+  text-align: right;
+}

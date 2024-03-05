@@ -9,11 +9,13 @@ import { NotificationService } from '../../../../service/Notification/Notificati
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { Table } from 'primeng/table';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
-  styleUrl: './stock.component.scss'
+  styleUrl: './stock.component.scss',
+  providers: [ConfirmationService, MessageService],
 })
 export class StockComponent implements OnInit {
   stockSForm!: FormGroup;
@@ -27,9 +29,12 @@ export class StockComponent implements OnInit {
   update!: UpdateProducts | undefined;
 
   value!: true;
+  changeItens!: true;
   description!: false;
   inventoryStatus!: false;
   category!: false;
+
+  sidebarVisible2: boolean = false;
 
   selectedProducts!: UpdateProducts[] | null;
 
@@ -37,6 +42,8 @@ export class StockComponent implements OnInit {
     private addProductsService: AddProductsService,
     private notificationService: NotificationService,
     private updateProductsService: UpdateProductsService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private storage: Storage,
     private fb: FormBuilder,
@@ -117,15 +124,32 @@ export class StockComponent implements OnInit {
 
 
   deleteProduct(uid: string): void {
+    // Obtém o nome do usuário atual ou define como "Unknown" se não houver usuário autenticado
+
     this.addProductsService.deleteProduct(uid)
       .then(() => {
         console.log('Produto excluído com sucesso.');
+        this.confirmationService.confirm({
+          message: `Do you want to delete this record? (Deleted by:})`,
+          header: 'Delete Confirmation',
+          icon: 'pi pi-info-circle',
+          acceptButtonStyleClass: "p-button-danger p-button-text",
+          rejectButtonStyleClass: "p-button-text p-button-text",
+          acceptIcon: "none",
+          rejectIcon: "none",
+          accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+          },
+          reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+          }
+        });
       })
       .catch((error) => {
         console.error('Erro ao excluir o produto:', error);
-
       });
   }
+
 
   uploadImage($event: any) {
     const file = $event.target.files[0];
@@ -168,6 +192,11 @@ export class StockComponent implements OnInit {
         });
       }
     })
+  }
+
+
+  changeItem() {
+    this.visible = true;
   }
 
   updateStock(id: any): void {

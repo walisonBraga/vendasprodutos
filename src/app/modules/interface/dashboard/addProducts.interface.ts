@@ -7,4 +7,6 @@ export interface AddProducts {
   category: string;
   price: number;
   quantity: number;
+  dataCadastro?: any;
+  cadastradoUser?: string;
 }

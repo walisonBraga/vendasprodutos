@@ -12,6 +12,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { AddProductsComponent } from '../add-products/add-products.component';
 import { UpdateProductsService } from '../../../../service/dashboard/update-products.service';
 import { UpdateProducts } from '../../../interface/dashboard/updateProducts';
+import { ChartData, ChartOptions } from 'chart.js';
 
 interface PageEvent {
   first: number;
@@ -27,6 +28,7 @@ interface PageEvent {
 export class DashboardHomeComponent {
   updateForm!: FormGroup;
   displayProducts: AddProducts[] = [];
+
   responsiveOptions: any[] | undefined;
   price: number = 123.45;
   sidebarVisible: boolean = false;
@@ -36,7 +38,12 @@ export class DashboardHomeComponent {
   first: number = 0;
   rows: number = 10;
 
+  basicData: any;
+
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
+
+  public productsChartDatas!: ChartData;
+  public GraficoItens!: ChartOptions;
 
 
 
@@ -91,7 +98,64 @@ export class DashboardHomeComponent {
     this.addProductsService.getAddProducts('').subscribe(addProducts => {
       this.displayProducts = addProducts;
     });
-    
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    this.addProductsService.getAddProducts('').subscribe(addProducts => {
+      // Aqui você pode fazer o que precisar com os dados dos produtos
+      console.log('Dados dos produtos:', addProducts);
+
+      // Formatando os dados para o gráfico
+      const labels = addProducts.map(product => product.nome);
+      const data = addProducts.map(product => product.quantity);
+
+      this.basicData = {
+        labels: labels,
+        datasets: [
+          {
+            label: ['Nome'],
+            data: data,
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            borderColor: 'rgb(255, 159, 64)',
+            borderWidth: 1
+          }
+        ]
+      };
+    });
+    this.GraficoItens = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor,
+          },
+        },
+      },
+
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+            font: {
+              weight: 500,
+            },
+          },
+          grid: {
+            color: surfaceBorder
+          }
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder
+          },
+        },
+      },
+    };
   }
 
   quantityOfItems() {

@@ -6,7 +6,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 //PrimeNg
 import { SidebarModule } from 'primeng/sidebar';
@@ -27,6 +28,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { CookieService } from 'ngx-cookie-service';
 import { TimelineModule } from 'primeng/timeline';
 import { StyleClassModule } from 'primeng/styleclass';
@@ -40,7 +42,7 @@ import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
-import { MatSelectModule } from '@angular/material/select';
+
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PaginatorModule } from 'primeng/paginator';
 import { ChartModule } from 'primeng/chart';
@@ -48,6 +50,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { DividerModule } from 'primeng/divider';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { CheckboxModule } from 'primeng/checkbox';
+
 
 
 //Pages
@@ -78,6 +81,7 @@ import { StockComponent } from './page/stock/stock.component';
     MatFormFieldModule,
     MatSelectModule,
     MatDialogModule,
+    MatInputModule,
 
     //PrimeNg
     SidebarModule,
@@ -116,6 +120,7 @@ import { StockComponent } from './page/stock/stock.component';
     DividerModule,
     TriStateCheckboxModule,
     CheckboxModule,
+    MessageModule,
     RouterModule.forChild(DASHBOARD_ROUTES)
   ],
   providers: [
