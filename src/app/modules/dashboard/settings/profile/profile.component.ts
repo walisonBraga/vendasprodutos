@@ -1,3 +1,4 @@
+import { user } from '@angular/fire/auth';
 import { ProfileService } from './../../../../service/dashboard/settings/profile.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -36,10 +37,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeForm();
+    this.updateProfile('');
   }
 
-  private initializeForm(): void {
+  updateProfile(uid: string): void {
     this.user = this.auth.getCurrentUser();
     this.profileForm = this.fb.group({
       imgUrl: new FormControl(this.user?.imgUrl),
@@ -62,6 +63,19 @@ export class ProfileComponent implements OnInit {
         .then(downloadURL => {
           console.log('Arquivo disponível em', downloadURL);
           this.profileForm.get('imgUrl')?.setValue(downloadURL);
+
+          // Exibir a imagem como uma pré-visualização
+          const img = document.createElement('img');
+          img.src = downloadURL;
+          img.classList.add('imgProfile');
+
+          const imageContainer = document.querySelector('.image-task');
+          if (imageContainer) {
+            // Limpar o contêiner de imagem antes de adicionar a nova imagem
+            imageContainer.innerHTML = '';
+            // Adicionar a nova imagem ao contêiner
+            imageContainer.appendChild(img);
+          }
         })
         .catch(error => {
           console.error('Erro ao obter URL de download:', error);
@@ -72,29 +86,38 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  profileUpdate(uid: string) {
-    if (this.user && this.profileForm.valid) {
-      const updatedProfile: Register = {
-        ...this.user,
+
+  updateUser() {
+    if (this.profileForm.valid && this.user != null) {
+      const userData: Register = {
+        ...this.user!,
         imgUrl: this.profileForm.value.imgUrl,
         nome: this.profileForm.value.nome,
         sobrenome: this.profileForm.value.sobrenome,
         email: this.profileForm.value.email,
-        password: this.profileForm.value.password
+        password: this.profileForm.value.password || '' // Defina um valor padrão para o campo de senha
       };
 
-      this.profileService.updateProfile(updatedProfile).then(() => {
-        console.log('Perfil atualizado com sucesso no Firestore!');
-      }).catch(error => {
-        console.error('Erro ao atualizar perfil no Firestore:', error);
-        // Trate o erro conforme necessário (por exemplo, exibindo uma mensagem de erro para o usuário)
-      });
+      // Verifica se o campo de senha não está vazio antes de atualizar o perfil
+      if (userData.password !== undefined && userData.password !== '') {
+        this.profileService.updateProfile(userData)
+          .then(() => {
+            console.log('Perfil atualizado com sucesso:', userData);
+            // Chama updateProfile novamente para atualizar o formulário com os novos dados
+            this.updateProfile(userData.uid);
+          })
+          .catch(error => {
+            console.log('Erro ao atualizar o perfil:', error.message);
+          });
+      } else {
+        console.log('A senha não pode estar vazia.');
+      }
     } else {
-      console.error('Erro: Usuário não definido ou formulário inválido.');
-      // Trate o erro conforme necessário (por exemplo, exibindo uma mensagem de erro para o usuário)
+      console.log('Por favor, preencha todos os campos obrigatórios.');
     }
-    return uid;
   }
+
+
 
 }
 

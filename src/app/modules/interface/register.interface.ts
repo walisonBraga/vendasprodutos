@@ -5,5 +5,4 @@ export interface Register {
   imgUrl?: string;
   email: string;
   password: string;
-  // confirmPassword: string;
 }

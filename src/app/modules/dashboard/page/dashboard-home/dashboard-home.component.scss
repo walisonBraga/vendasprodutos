@@ -46,3 +46,33 @@ fieldset {
   width: 190%;
   height: 100px;
 }
+
+
+
+/* app.component.scss */
+:host {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.title {
+  color: var(--primary-color);
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+/* Outro arquivo de componente */
+.container {
+  background-color: var(--secondary-color);
+  padding: 1rem;
+}
+
+p-chart{
+  width: max-content;
+}

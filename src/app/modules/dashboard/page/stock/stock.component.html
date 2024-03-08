@@ -57,7 +57,6 @@
                 <p-button
                   icon="pi pi-trash"
                   (click)="deleteProduct(stocks.uid)"
-                  icon="pi pi-trash"
                   [rounded]="true"
                    styleClass="p-button-danger"
                 />
@@ -273,6 +272,7 @@
       </th>
       <th>editar/Deletar</th>
       <th></th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-stocks>
@@ -310,7 +310,7 @@
           pButton
           pRipple
           icon="pi pi-trash"
-          class="p-button-rounded p-button-warning"
+          class="p-button-danger"
           (click)="deleteProduct(stocks.uid)"
         ></button>
       </td>

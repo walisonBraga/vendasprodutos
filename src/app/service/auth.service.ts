@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword } from '@angular/fire/auth';
 import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
@@ -20,6 +20,21 @@ export class AuthService {
   async register(email: string, password: string) {
     const result = await createUserWithEmailAndPassword(this.afAuth, email, password);
     return result;
+  }
+
+  async updatePassword(newPassword: string): Promise<void> {
+    try {
+      const user = this.afAuth.currentUser;
+      if (user) {
+        await updatePassword(user, newPassword);
+        console.log('Senha atualizada com sucesso!');
+      } else {
+        throw new Error('Nenhum usuário autenticado encontrado.');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar a senha:', error);
+      throw error; // Rejeita a promessa com o erro para que seja tratado pelo chamador, se necessário
+    }
   }
 
   async logout() {
@@ -49,11 +64,11 @@ export class AuthService {
           }
           localStorage.setItem('user-credential', JSON.stringify(data));
         } else {
-          console.error("No user found with the provided ID.");
+          console.error("Nenhum usuário encontrado com o ID fornecido.");
         }
       })
       .catch(error => {
-        console.error("Error retrieving user information:", error);
+        console.error("Erro ao recuperar informações do usuário:", error);
       });
   }
 

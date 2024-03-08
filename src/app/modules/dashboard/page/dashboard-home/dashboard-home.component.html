@@ -18,7 +18,7 @@
     <ng-template pTemplate="header">
       <div class="flex align-items-center gap-1 px-2">
         <a class="pi pi-star"></a>
-        <span class="font-bold">faturamento da STARGAMER</span>
+        <span class="font-bold">Compras da STARGAMER</span>
       </div>
     </ng-template>
     <p class="m-0">
@@ -26,62 +26,99 @@
       {{ calculateTotalSales() | currency : " symbol" : "R$" }}
     </p>
   </p-fieldset>
-</div>
 
-<div class="col-12 xl:col-6">
-  <p-table
-    [value]="displayProducts"
-    [paginator]="true"
-    [rows]="5"
-    [tableStyle]="{ 'min-width': '60rem' }"
-  >
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        Produtos...
-        <p-button icon="pi pi-refresh"></p-button>
+  <p-fieldset class="gap-1 btn btn-primary">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-1 px-2">
+        <a class="pi pi-star"></a>
+        <span class="font-bold">Revenda da STARGAMER</span>
       </div>
     </ng-template>
+    <p class="m-0">
+      <a class="pi pi-calculator"></a>
+      {{ calculateTotalResale() | currency : " symbol" : "R$" }}
+    </p>
+  </p-fieldset>
+  <p-fieldset class="gap-1 btn btn-primary">
     <ng-template pTemplate="header">
-      <tr>
-        <th>Nome</th>
-        <th>Image</th>
-        <th>Preço</th>
-        <th>Categoria</th>
-        <th>Qtdade</th>
-        <th>Status</th>
-        <!-- <th>Status</th> -->
-      </tr>
+      <div class="flex align-items-center gap-1 px-2">
+        <a class="pi pi-star"></a>
+        <span class="font-bold">Lucros da STARGAMER</span>
+      </div>
     </ng-template>
-    <ng-template pTemplate="body" let-displayProducts>
-      <tr>
-        <td>{{ displayProducts.nome }}</td>
-        <td>
-          <img
-            [src]="displayProducts.imgProducts"
-            [alt]="displayProducts.nome"
-            width="50"
-            class="shadow-4"
-          />
-        </td>
-        <td>{{ displayProducts.price | currency : "BRL" }}</td>
-        <td>{{ displayProducts.category }}</td>
-        <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
-        <td>
-          <p-tag
-            [value]="displayProducts.quantity"
-            [severity]="getSeverity(displayProducts.inventoryStatus)"
-          ></p-tag>
-        </td>
-        <td>
-          <p-tag
-            [value]="displayProducts.inventoryStatus"
-            [severity]="getSeverity(displayProducts.inventoryStatus)"
-          ></p-tag>
-        </td>
-      </tr>
+    <p class="m-0">
+      <a class="pi pi-calculator"></a>
+      {{ profits() | currency : " symbol" : "R$" }}
+    </p>
+  </p-fieldset>
+  <p-fieldset class="gap-1 btn btn-primary">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-1 px-2">
+        <a class="pi pi-star"></a>
+        <span class="font-bold">Percentual da STARGAMER</span>
+      </div>
     </ng-template>
-  </p-table>
+    <p class="m-0">
+      <a class="pi pi-percentage"></a>
+      {{ profitsPercentage() | number : "1.2-2" }}%
+    </p>
+  </p-fieldset>
 </div>
-  <div class="card">
+
+<div class="grid">
+  <div class="col-12 xl:col-6">
+    <div class="card">
+      <h5>Recent Sales</h5>
+      <p-table
+        [value]="displayProducts"
+        [paginator]="true"
+        [rows]="5"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Image</th>
+            <th pSortableColumn="name">
+              Nome <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="price">
+              Valor <p-sortIcon field="price"></p-sortIcon>
+            </th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-displayProducts>
+          <tr>
+            <td style="width: 15%; min-width: 5rem">
+              <img
+                src="{{ displayProducts.imgProducts }}"
+                class="shadow-4"
+                alt="{{ displayProducts.nome }}"
+                width="50"
+              />
+            </td>
+            <td style="width: 35%; min-width: 7rem">
+              {{ displayProducts.nome }}
+            </td>
+            <td style="width: 35%; min-width: 8rem">
+              {{ displayProducts.price | currency : "USD" }}
+            </td>
+            <td style="width: 15%">
+              <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-search"
+                class="p-button p-component p-button-text p-button-icon-only"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="col-12 xl:col-6">
+    <h5>Visão geral de vendas</h5>
     <p-chart type="bar" [data]="basicData" [options]="GraficoItens"></p-chart>
   </div>
+</div>

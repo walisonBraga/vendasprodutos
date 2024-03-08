@@ -11,6 +11,7 @@ import { NotificationService } from '../../../../service/Notification/Notificati
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../service/auth.service';
 import { Firestore } from '@angular/fire/firestore';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-add-products',
@@ -28,6 +29,9 @@ export class AddProductsComponent implements OnInit {
   description!: false;
   inventoryStatus!: false;
   category!: false;
+  suggestions: any[] | undefined;
+
+  selectedItem: any;
 
   uid: string | null = null;
   id!: string;
@@ -69,11 +73,13 @@ export class AddProductsComponent implements OnInit {
       description: ['', Validators.required],
       inventoryStatus: ['', Validators.required],
       category: ['', Validators.required],
-      price: ['', Validators.required],
-      quantity: ['', Validators.required],
+      price: [0, Validators.required],
+      quantity: [0, Validators.required],
+      resale: ['', Validators.required],
     });
 
   }
+
 
   onImageError(event: any) {
     this.loading = false;
@@ -89,6 +95,8 @@ export class AddProductsComponent implements OnInit {
       this.id = params['id'];
     });
 
+
+
   }
 
   ngOnDestroy() {
@@ -100,8 +108,30 @@ export class AddProductsComponent implements OnInit {
     return user ? user.nome : '';
   }
 
+  calculateResaleValue(price: number): string {
+    const resalePrice = (price * 1.4).toFixed(2); // Arredonda para 2 casas decimais
+    return resalePrice;
+  }
+
+
+
+  // calculateResaleValue(): void {
+  //   const price = this.addProductsForm.value.price;
+  //   const currentResale = this.addProductsForm.value.resale;
+
+  //   const expectedResale = price * 1.4; // Calculando 40% do preço e adicionando 30
+
+  //   // Verificando se o valor atual de 'resale' é diferente do esperado
+  //   if (currentResale !== expectedResale) {
+  //     this.addProductsForm.patchValue({ resale: expectedResale });
+  //   }
+  // }
+
+
+
+
   async loadData() {
-    const currentUser = this.auth.getCurrentUser();
+    // const currentUser = this.auth.getCurrentUser();
     const currentDate = new Date().toISOString();
 
     const addProducts: AddProducts = {
@@ -113,6 +143,7 @@ export class AddProductsComponent implements OnInit {
       category: this.addProductsForm.value.category,
       price: this.addProductsForm.value.price,
       quantity: this.addProductsForm.value.quantity,
+      resale: this.addProductsForm.value.resale,
       dataCadastro: currentDate,
       // cadastradoUser: currentUser ? currentUser.nome : null,  // Armazena apenas o UID do usuário
       cadastradoUser: this.auth.getCurrentUser()

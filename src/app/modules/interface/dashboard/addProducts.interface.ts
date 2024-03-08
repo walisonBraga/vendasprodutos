@@ -6,6 +6,7 @@ export interface AddProducts {
   inventoryStatus: string;
   category: string;
   price: number;
+  resale: number;
   quantity: number;
   dataCadastro?: any;
   cadastradoUser?: string;

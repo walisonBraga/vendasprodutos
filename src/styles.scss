@@ -3,3 +3,23 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+
+/* styles.css */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --background-color: #f8f9fa;
+  --text-color: #343a40;
+}
+
+/* Estilos para o tema light */
+.light-theme {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Estilos para o tema dark */
+.dark-theme {
+  background-color: #222222;
+  color: #ffffff;
+}

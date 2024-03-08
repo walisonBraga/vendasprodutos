@@ -1,3 +1,53 @@
+<p-toolbar
+  styleClass="bg-gray-900 shadow-2"
+  [style]="{
+    'background-image':
+      'linear-gradient(to right, var(--bluegray-750), var(--bluegray-900))'
+  }"
+>
+  <ng-template pTemplate="start">
+    <p-button
+      class="m-3"
+      (click)="sidebarVisible = true"
+      icon="pi pi-th-large"
+    ></p-button>
+  </ng-template>
+  <ng-template pTemplate="center">
+    <div class="flex flex-wrap align-items-center gap-3">
+      <button
+        class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
+        [ngClass]="{
+          'bg-yellow-900': !isDarkTheme,
+          'bg-gray-900': isDarkTheme
+        }"
+        (click)="toggleTheme()"
+      >
+        <i *ngIf="!isDarkTheme" class="pi pi-sun"></i>
+        <i *ngIf="isDarkTheme" class="pi pi-moon"></i>
+      </button>
+
+      <button
+        class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
+      >
+        <i class="pi pi-user text-2xl"></i>
+      </button>
+      <button
+        class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
+      >
+        <i class="pi pi-search text-2xl"></i>
+      </button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="flex align-items-center gap-2">
+      <p-avatar image="{{ user?.imgUrl }}" shape="circle" />
+      <span class="font-bold text-bluegray-50"
+        >{{ user?.nome }} {{ user?.sobrenome }}</span
+      >
+    </div>
+  </ng-template>
+</p-toolbar>
+
 <form class="card flex lef" (ngSubmit)="onSubmit()">
   <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
     <ng-template pTemplate="headless">
@@ -215,9 +265,4 @@
       </div>
     </ng-template>
   </p-sidebar>
-  <p-button
-    class="m-3"
-    (click)="sidebarVisible = true"
-    icon="pi pi-th-large"
-  ></p-button>
 </form>

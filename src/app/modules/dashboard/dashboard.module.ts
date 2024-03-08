@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 //PrimeNg
 import { SidebarModule } from 'primeng/sidebar';
@@ -50,6 +51,8 @@ import { DataViewModule } from 'primeng/dataview';
 import { DividerModule } from 'primeng/divider';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { CheckboxModule } from 'primeng/checkbox';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 
 
@@ -82,6 +85,7 @@ import { StockComponent } from './page/stock/stock.component';
     MatSelectModule,
     MatDialogModule,
     MatInputModule,
+    MatSlideToggleModule,
 
     //PrimeNg
     SidebarModule,
@@ -121,6 +125,8 @@ import { StockComponent } from './page/stock/stock.component';
     TriStateCheckboxModule,
     CheckboxModule,
     MessageModule,
+    AutoCompleteModule,
+    ToggleButtonModule,
     RouterModule.forChild(DASHBOARD_ROUTES)
   ],
   providers: [

@@ -19,31 +19,20 @@ export class ProfileService {
   }
 
   getProfile(id: string): Observable<Register[]> {
-    const profileRef = collection(this.firestore, 'Register' + id);
+    const profileRef = collection(this.firestore, 'Register');
     return collectionData(profileRef, { idField: 'uid' }) as Observable<Register[]>;
   }
 
-  getUserById(userId: string): Observable<Register | undefined> {
-    const userRef = doc(this.firestore, 'Register', userId);
-    return new Observable<Register | undefined>(observer => {
-      getDoc(userRef).then(docSnapshot => {
-        if (docSnapshot.exists()) {
-          const userData = docSnapshot.data() as Register;
-          observer.next(userData);
-        } else {
-          observer.next(undefined); // Documento não encontrado
-        }
-        observer.complete();
-      }).catch(error => {
-        observer.error(error); // Tratar erro, se necessário
-      });
-    });
-  }
-
-
   async updateProfile(update: Register): Promise<void> {
-    const productId = update.uid;
-    const productRef: DocumentReference = doc(this.firestore, 'Register', productId);
-    await setDoc(productRef, { ...update } );
+    if (update.uid && update.nome && update.sobrenome && update.email && update.password) {
+      const profileId = update.uid;
+      const profileRef: DocumentReference = doc(this.firestore, 'Register', profileId);
+      await setDoc(profileRef, { ...update });
+    } else {
+      console.error('Dados inválidos para atualização do perfil:', update);
+      throw new Error('Dados inválidos para atualização do perfil');
+    }
   }
+
+
 }
