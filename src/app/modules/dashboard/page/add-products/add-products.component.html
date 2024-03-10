@@ -4,8 +4,8 @@
   [formGroup]="addProductsForm"
   class="flex flex-column justify-content-center align-content-center px-8 py-5 gap-4"
   style="
-    border-radius: 12px;
-    height: 750px;
+    border-radius: 10px;
+    height: 850px;
     width: 75%;
     background-image: radial-gradient(
       circle at left top,
@@ -194,14 +194,14 @@
             >Valor para Revenda</label
           >
           <p-inputNumber
-          [disabled]="true"
-          class="bg-white-alpha-20 border-none p-3 text-primary-50"
-          inputId="integeronly"
-          formControlName="resale"
-          pTooltip="Valor da revenda"
-          [ngModel]="calculateResaleValue(addProductsForm.value.price)"
-        >
-        </p-inputNumber>
+            [disabled]="true"
+            class="bg-white-alpha-20 border-none p-3 text-primary-50"
+            inputId="integeronly"
+            formControlName="resale"
+            pTooltip="Valor da revenda"
+            [ngModel]="calculateResaleValue(addProductsForm.value.price)"
+          >
+          </p-inputNumber>
         </div>
       </div>
     </div>

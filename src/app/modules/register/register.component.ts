@@ -31,23 +31,42 @@ export class RegisterComponent {
       sobrenome: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
+      selectedPage: ['', Validators.required],
     });
 
   }
 
   async onSubmit() {
     if (this.registerForm.invalid) return;
-    const uid = uuidv4();
-    const authResponse = await this.auth.register(this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
 
-    const body = {
-      ...this.registerForm.value,
-      'uid': authResponse.user?.uid,
-    };
-    const registerRef = await this.register.addRegister(body);
-    this.registerForm.reset();
-    return registerRef;
+    try {
+      // Registra o usuário no serviço de autenticação
+      const authResponse = await this.auth.register(
+        this.registerForm.get('email')?.value,
+        this.registerForm.get('password')?.value
+      );
+
+      // Cria um objeto com os dados do usuário, incluindo o UID retornado pela autenticação
+      const userData = {
+        ...this.registerForm.value,
+        uid: authResponse.user?.uid
+      };
+
+      // Adiciona os dados do usuário ao Firestore ou ao banco de dados Firebase
+      const registerRef = await this.register.addRegister(userData);
+
+      // Reseta o formulário após o registro bem-sucedido
+      // Redireciona o usuário para a página selecionada após o registro
+      const selectedPage = this.registerForm.controls['selectedPage'].value;
+      this.router.navigate([selectedPage]);
+      this.registerForm.reset();
+      return registerRef
+    } catch (error) {
+      console.error('Erro durante o registro:', error);
+      // Tratar erros de registro, se necessário
+    }
   }
+
 
   uploadImage($event: any) {
     const file = $event.target.files[0];

@@ -54,7 +54,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 
-
+//Apexcharts
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 //Pages
 import { DashboardHomeComponent } from './page/dashboard-home/dashboard-home.component';
@@ -86,6 +87,9 @@ import { StockComponent } from './page/stock/stock.component';
     MatDialogModule,
     MatInputModule,
     MatSlideToggleModule,
+
+    //Apexcharts
+    NgApexchartsModule,
 
     //PrimeNg
     SidebarModule,

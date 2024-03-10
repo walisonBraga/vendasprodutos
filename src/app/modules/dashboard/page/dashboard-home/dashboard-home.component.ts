@@ -1,27 +1,14 @@
-import { DashboardService } from '../../../../service/dashboard/dashboard.service';
 import { Component, ViewChild, inject } from '@angular/core';
-import { AuthService } from '../../../../service/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AddProducts } from '../../../interface/dashboard/addProducts.interface';
 import { AddProductsService } from '../../../../service/dashboard/add-products.service';
-import { Firestore, updateDoc } from '@angular/fire/firestore';
 import { Sidebar } from 'primeng/sidebar';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AddProductsComponent } from '../add-products/add-products.component';
-import { UpdateProductsService } from '../../../../service/dashboard/update-products.service';
-import { UpdateProducts } from '../../../interface/dashboard/updateProducts';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChartData, ChartOptions } from 'chart.js';
 import { ThemeService } from '../../../../service/dashboard/theme.service';
 
 
-// interface PageEvent {
-//   first: number;
-//   rows: number;
-//   page: number;
-//   pageCount: number;
-// }
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',

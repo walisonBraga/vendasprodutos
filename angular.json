@@ -44,7 +44,9 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {

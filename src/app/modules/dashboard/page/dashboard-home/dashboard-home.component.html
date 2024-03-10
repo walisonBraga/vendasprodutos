@@ -22,7 +22,7 @@
       </div>
     </ng-template>
     <p class="m-0">
-      <a class="pi pi-calculator"></a>
+      <a class="pi pi-cart-plus"></a>
       {{ calculateTotalSales() | currency : " symbol" : "R$" }}
     </p>
   </p-fieldset>
@@ -47,7 +47,7 @@
       </div>
     </ng-template>
     <p class="m-0">
-      <a class="pi pi-calculator"></a>
+      <a class="pi pi-dollar"></a>
       {{ profits() | currency : " symbol" : "R$" }}
     </p>
   </p-fieldset>
@@ -122,3 +122,9 @@
     <p-chart type="bar" [data]="basicData" [options]="GraficoItens"></p-chart>
   </div>
 </div>
+
+<div class="card flex justify-content-center">
+  <p-knob [(ngModel)]="profitsPercentage" valueTemplate="{value}%">Lucro Percentual</p-knob>
+</div>
+
+

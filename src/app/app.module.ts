@@ -63,6 +63,7 @@ import { LoginComponent } from './modules/login/login.component';
 import { RegisterComponent } from './modules/register/register.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +82,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HttpClientModule,
     FormsModule,
 
-    //PrimeNg
+    
     //PrimeNg
     SidebarModule,
     InputGroupModule,

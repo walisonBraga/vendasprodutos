@@ -4,5 +4,6 @@ export interface Register {
   sobrenome: string;
   imgUrl?: string;
   email: string;
+  selectedPage: string;
   password: string;
 }
