@@ -51,7 +51,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-
   uploadImage(event: any): void {
     const file = event.target.files[0];
     const storageRef = ref(this.storage, `img_Register/${file.name}`);
@@ -87,7 +86,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  updateUser() {
+  async updateUser() {
     if (this.profileForm.valid && this.user != null) {
       const userData: Register = {
         ...this.user!,
@@ -100,9 +99,12 @@ export class ProfileComponent implements OnInit {
 
       // Verifica se o campo de senha não está vazio antes de atualizar o perfil
       if (userData.password !== undefined && userData.password !== '') {
+        // Atualiza o perfil no Firestore
         this.profileService.updateProfile(userData)
-          .then(() => {
-            console.log('Perfil atualizado com sucesso:', userData);
+          .then(async () => {
+            // console.log('Perfil atualizado com sucesso:', userData);
+            // Atualiza o email e a senha no serviço de autenticação
+            await this.updateAuthCredentials(userData.email, userData.password);
             // Chama updateProfile novamente para atualizar o formulário com os novos dados
             this.updateProfile(userData.uid);
           })
@@ -117,7 +119,18 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-
-
+  // Método para atualizar email e senha no serviço de autenticação
+  async updateAuthCredentials(email: string, password: string) {
+    try {
+      const user = this.auth.getCurrentUser();
+      if (user) {
+        await user.updateEmail(email);
+        await user.updatePassword(password);
+        console.log('Email e senha atualizados com sucesso no serviço de autenticação.');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar email e senha no serviço de autenticação:', error);
+      throw new Error('Erro ao atualizar email e senha no serviço de autenticação');
+    }
+  }
 }
-

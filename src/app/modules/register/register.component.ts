@@ -40,20 +40,19 @@ export class RegisterComponent {
     if (this.registerForm.invalid) return;
 
     try {
-      // Registra o usuário no serviço de autenticação
-      const authResponse = await this.auth.register(
-        this.registerForm.get('email')?.value,
-        this.registerForm.get('password')?.value
-      );
+      // Registrar o usuário
+      const authResponse = await this.auth.register(this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
+      const userId = authResponse.user?.uid;
 
-      // Cria um objeto com os dados do usuário, incluindo o UID retornado pela autenticação
-      const userData = {
+      // Criar um objeto com os dados do formulário e o ID do usuário
+      const body = {
         ...this.registerForm.value,
-        uid: authResponse.user?.uid
+        uid: userId,
       };
 
-      // Adiciona os dados do usuário ao Firestore ou ao banco de dados Firebase
-      const registerRef = await this.register.addRegister(userData);
+
+      const registerId = userId; // Use o ID do usuário como ID do registro
+      const registerRef = await this.register.addRegister(body, registerId);
 
       // Reseta o formulário após o registro bem-sucedido
       // Redireciona o usuário para a página selecionada após o registro
