@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword } from '@angular/fire/auth';
+import { Auth, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword, updateEmail, sendEmailVerification } from '@angular/fire/auth';
 import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
@@ -22,6 +22,40 @@ export class AuthService {
     return result;
   }
 
+
+
+  // Função para atualizar o email
+  async updateEmail(newEmail: string): Promise<void> {
+    try {
+      const user = this.afAuth.currentUser;
+      if (user) {
+        await updateEmail(user, newEmail);
+        console.log('Email atualizado com sucesso!');
+      } else {
+        throw new Error('Nenhum usuário autenticado encontrado.');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar o email:', error); // Correção aqui: 'email' -> 'email'
+      throw error;
+    }
+  }
+
+  async sendEmailVerification() {
+    const user = this.afAuth.currentUser;
+    if (user) {
+      try {
+        await sendEmailVerification(user);
+        console.log('E-mail de verificação enviado com sucesso!');
+      } catch (error) {
+        console.error('Erro ao enviar o e-mail de verificação:', error);
+        throw error;
+      }
+    } else {
+      throw new Error('Nenhum usuário autenticado encontrado.');
+    }
+  }
+
+  // Função para atualizar o Password
   async updatePassword(newPassword: string): Promise<void> {
     try {
       const user = this.afAuth.currentUser;

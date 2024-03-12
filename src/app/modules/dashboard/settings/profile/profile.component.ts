@@ -85,7 +85,6 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-
   async updateUser() {
     if (this.profileForm.valid && this.user != null) {
       const userData: Register = {
@@ -99,18 +98,19 @@ export class ProfileComponent implements OnInit {
 
       // Verifica se o campo de senha não está vazio antes de atualizar o perfil
       if (userData.password !== undefined && userData.password !== '') {
-        // Atualiza o perfil no Firestore
-        this.profileService.updateProfile(userData)
-          .then(async () => {
-            // console.log('Perfil atualizado com sucesso:', userData);
-            // Atualiza o email e a senha no serviço de autenticação
-            await this.updateAuthCredentials(userData.email, userData.password);
-            // Chama updateProfile novamente para atualizar o formulário com os novos dados
-            this.updateProfile(userData.uid);
-          })
-          .catch(error => {
-            console.log('Erro ao atualizar o perfil:', error.message);
-          });
+        try {
+          // Atualiza o perfil no Firestore e aguarda a conclusão
+          await this.profileService.updateProfile(userData);
+
+          // Agora, atualiza o email e a senha
+          // await this.auth.updateEmail(userData.email);
+          // await this.auth.sendEmailVerification();
+          await this.auth.updatePassword(userData.password);
+
+          console.log('Perfil, email e senha atualizados com sucesso');
+        } catch (error) {
+          console.error('Erro ao atualizar o perfil:', error);
+        }
       } else {
         console.log('A senha não pode estar vazia.');
       }
@@ -119,18 +119,4 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  // Método para atualizar email e senha no serviço de autenticação
-  async updateAuthCredentials(email: string, password: string) {
-    try {
-      const user = this.auth.getCurrentUser();
-      if (user) {
-        await user.updateEmail(email);
-        await user.updatePassword(password);
-        console.log('Email e senha atualizados com sucesso no serviço de autenticação.');
-      }
-    } catch (error) {
-      console.error('Erro ao atualizar email e senha no serviço de autenticação:', error);
-      throw new Error('Erro ao atualizar email e senha no serviço de autenticação');
-    }
-  }
 }
